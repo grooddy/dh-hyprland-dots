@@ -1,0 +1,93 @@
+/* --- Шрифты --- */
+* {
+    font-family: "SF Pro Display", "SFProDisplay Nerd Font", sans-serif;
+    font-size: 14px; /* Чуть крупнее, как в Mac */
+    font-weight: 500;
+    min-height: 0;
+}
+
+/* --- Главное окно (Сама панель) --- */
+window#waybar {
+    background: rgba(0, 0, 0, 0.25); /* Темное стекло */
+    /* Если хочешь светлую тему Mac: background: rgba(255, 255, 255, 0.6); */
+    
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Тонкая линия снизу */
+    color: #ffffff;
+    transition: background-color 0.3s;
+}
+
+/* Эффект блюра (размытия фона под панелью) задается в hyprland.conf через layerrule */
+
+/* --- Модули (Общий сброс) --- */
+#custom-apple,
+#window,
+#clock,
+#battery,
+#pulseaudio,
+#backlight,
+#network,
+#bluetooth,
+#tray,
+#custom-gpu,
+#custom-power,
+#language,
+#custom-notification {
+    background: transparent; /* Убираем фон "таблеток" */
+    padding: 0 10px;         /* Отступы внутри текста */
+    margin: 4px 2px;         /* Отступы между элементами */
+    border-radius: 6px;      /* Скругление при наведении */
+    border: none;
+    box-shadow: none;
+    color: #ffffff;
+}
+
+/* --- Логотип Apple --- */
+#custom-apple {
+    font-size: 18px;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-left: 0;
+}
+
+/* --- Название окна (Как в Mac - жирное) --- */
+#window {
+    font-weight: 700; 
+    padding-left: 4px;
+}
+
+/* --- Правая часть (Статус бар) --- */
+#clock {
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+#battery.charging, #battery.plugged {
+    color: #32d74b; /* Зеленый при зарядке */
+}
+
+#battery.critical:not(.charging) {
+    color: #ff3b30; /* Красный при разряде */
+}
+
+/* --- Эффект наведения (Hover) как в macOS --- */
+/* При наведении появляется легкая подложка */
+#custom-apple:hover,
+#window:hover,
+#clock:hover,
+#battery:hover,
+#pulseaudio:hover,
+#backlight:hover,
+#custom-gpu:hover,
+#custom-power:hover,
+#language:hover,
+#custom-notification:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* --- Tray --- */
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}

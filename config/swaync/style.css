@@ -1,0 +1,63 @@
+@import url("file:///home/dh/.cache/wal/colors-waybar.css");
+
+* {
+    font-family: "SF Pro Display", sans-serif;
+    color: white;
+}
+
+.control-center {
+    background: rgba(25, 25, 25, 0.5); 
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.widget-buttons-grid, .widget-volume, .widget-mpris {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    margin: 12px 12px;
+    padding: 12px;
+}
+
+/* Кнопки */
+.widget-buttons-grid button {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    margin: 4px;
+    min-height: 50px;
+}
+
+/* --- ПОЛЗУНКИ (Безопасная реализация macOS) --- */
+scale trough {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    min-height: 26px;
+    min-width: 200px;
+}
+
+scale highlight {
+    background: #ffffff;
+    border-radius: 14px;
+}
+
+/* Вместо margin: -24px, который злит GTK, просто обнуляем все визуальные параметры слайдера */
+scale slider {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    min-height: 26px; /* Совпадает с высотой trough */
+    min-width: 0px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Плеер */
+.widget-mpris-album-art {
+    border-radius: 14px;
+}
+
+/* Уведомления */
+.notification {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    margin: 5px 10px;
+}

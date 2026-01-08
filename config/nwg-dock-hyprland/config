@@ -1,0 +1,16 @@
+{
+  "width": 0,
+  "icon-size": 48,           // Уменьшили с 54 для аккуратности
+  "margin-bottom": 12,       // Чуть выше от края экрана
+  "exclusive": false,        // Чтобы окна могли заходить под него
+  "autohide": true,
+  "layershell": true,
+  "position": "bottom",
+  "alignment": "center",
+  "fixed-size": false,
+  "hide-delay": 200,         // Быстрее скрывается
+  "show-delay": 50,          // Почти мгновенно появляется
+  "show-search": false,      // В доке macOS нет поиска, он в Spotlight
+  "show-all": false,         // Показывать только запущенные и закрепленные
+  "show-open": true
+}

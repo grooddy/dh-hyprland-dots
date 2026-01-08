@@ -1,0 +1,44 @@
+@import url("file:///home/dh/.cache/wal/colors-waybar.css");
+
+window {
+    background: transparent;
+}
+
+#box {
+    /* Если alpha() не работает, используем @background напрямую или rgba */
+    background-color: @background; 
+    padding: 4px 8px;
+    border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+button {
+    background: none;
+    border: none;
+}
+
+button:hover {
+    /* Заменяем alpha на просто цвет для теста стабильности */
+    background-color: @color1; 
+    border-radius: 14px;
+}
+
+/* Индикаторы (точки) */
+#indicator {
+    background-color: @color1;
+    min-width: 4px;
+    min-height: 4px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+}
+
+/* Кнопка меню приложений */
+#launcher-button image {
+    color: @color1;
+}
+
+/* Активное приложение */
+#active-button {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+}

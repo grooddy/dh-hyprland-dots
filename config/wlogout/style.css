@@ -1,0 +1,42 @@
+/* Импорт твоих цветов из Pywal */
+@import url("file:///home/dh/.cache/wal/colors-waybar.css");
+
+/* Общие настройки */
+* {
+    background-image: none;
+    font-family: "SF Pro Display", sans-serif;
+}
+
+window {
+    background-color: rgba(0, 0, 0, 0.2); /* Очень легкое затемнение, остальное сделает blur */
+}
+
+/* Настройка кнопок */
+button {
+    background-color: alpha(@background, 0.3);
+    color: @foreground;
+    border: 1px solid alpha(@foreground, 0.1);
+    border-radius: 20px;
+    margin: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25%;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+/* Эффект при наведении (вместо синего) */
+button:focus, button:active, button:hover {
+    background-color: alpha(@color1, 0.5); /* Твой акцентный цвет с прозрачностью */
+    border: 1px solid @color1;
+    color: white;
+    outline-style: none;
+}
+
+/* Иконки (проверь пути, если иконки не появятся) */
+#lock { background-image: image(url("/usr/share/wlogout/icons/lock.png")); }
+#logout { background-image: image(url("/usr/share/wlogout/icons/logout.png")); }
+#suspend { background-image: image(url("/usr/share/wlogout/icons/suspend.png")); }
+#hibernate { background-image: image(url("/usr/share/wlogout/icons/hibernate.png")); }
+#shutdown { background-image: image(url("/usr/share/wlogout/icons/shutdown.png")); }
+#reboot { background-image: image(url("/usr/share/wlogout/icons/reboot.png")); }

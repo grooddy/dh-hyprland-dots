@@ -1,0 +1,35 @@
+/* Импорт цветов Pywal (через кэш wal) */
+@import url("file:///home/dh/.cache/wal/colors.css");
+
+:root {
+    /* Используем переменные, которые генерирует Pywalfox */
+    --zen-primary-color: var(--pywalfox-accent) !important;
+    
+    /* Для светлой темы сделаем фон беловатым, для темной - темным */
+    --zen-bg-glass: rgba(255, 255, 255, 0.1); 
+}
+
+/* Применяем цвет к активной вкладке */
+.tab-background[selected="true"] {
+    background-color: var(--zen-primary-color) !important;
+    background-image: none !important;
+}
+
+/* Эффект стекла для тулбара */
+#nav-bar {
+    background: var(--zen-bg-glass) !important;
+    backdrop-filter: blur(15px) !important;
+    box-shadow: none !important;
+}
+
+/* Убираем лишние линии */
+#navigator-toolbox {
+    border-bottom: none !important;
+}
+
+/* --- Дальше твои настройки URL-бара (они отличные) --- */
+#urlbar-input-container {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    border-radius: 12px !important;
+}
+/* ... и так далее ... */
