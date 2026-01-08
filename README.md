@@ -43,6 +43,7 @@
 ## 🚀 Быстрая установка
 
 ### 1. Склонируйте репозиторий
+
 git clone [https://github.com/grooddy/dh-hyprland-dots.git](https://github.com/grooddy/dh-hyprland-dots.git) ~/dotfiles
 cd ~/dotfiles'''
 ### 2. Запустите инсталлятор
