@@ -7,29 +7,29 @@ YELLOW='\033[0;33m'
 RED='\033[0;31m'
 NC='\033[0m'
 
+# Получаем абсолютный путь к папке скрипта (твои дотфайлы)
 DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 CONFIG_DIR="$HOME/.config"
 BACKUP_DIR="$HOME/.config_backup_$(date +%Y%m%d_%H%M%S)"
 
-# Список софта для проверки (зависимости)
-DEPENDENCIES=("hyprland" "alacritty" "waybar" "swaync" "rofi" "jetbrains-mono-nerd-font")
-# Папки для линковки
+# Зависимости и папки
+DEPENDENCIES=("hyprland" "alacritty" "waybar" "swaync" "rofi")
 CONFIGS=("hypr" "alacritty" "waybar" "swaync" "rofi")
 
-echo -e "${BLUE}>>> Подготовка к установке дотфайлов...${NC}"
+echo -e "${BLUE}>>> Начало установки. Источник: $DOTFILES_DIR${NC}"
 
-# 1. Проверка зависимостей (только инфо)
-echo -e "${BLUE}>>> Проверка установленных пакетов...${NC}"
+# 1. Проверка пакетов
+echo -e "${BLUE}>>> Проверка пакетов...${NC}"
 for pkg in "${DEPENDENCIES[@]}"; do
     if pacman -Qs "$pkg" > /dev/null; then
-        echo -e "${GREEN}[OK]${NC} $pkg установлен."
+        echo -e "${GREEN}[OK]${NC} $pkg"
     else
-        echo -e "${YELLOW}[!]${NC} $pkg не найден. Установите его позже: sudo pacman -S $pkg"
+        echo -e "${YELLOW}[!]${NC} $pkg не найден"
     fi
 done
 
 # 2. Создание ссылок
-echo -e "${BLUE}>>> Создание символических ссылок...${NC}"
+echo -e "${BLUE}>>> Настройка конфигураций...${NC}"
 mkdir -p "$CONFIG_DIR"
 
 for folder in "${CONFIGS[@]}"; do
@@ -37,26 +37,31 @@ for folder in "${CONFIGS[@]}"; do
     SOURCE="$DOTFILES_DIR/config/$folder"
 
     if [ -d "$SOURCE" ]; then
-        # Если там реальная папка (не ссылка), делаем бэкап
-        if [ -d "$TARGET" ] && [ ! -L "$TARGET" ]; then
-            mkdir -p "$BACKUP_DIR"
-            echo -e "${YELLOW}>>> Бэкап существующего $folder в $BACKUP_DIR${NC}"
-            mv "$TARGET" "$BACKUP_DIR/"
+        # Если цель уже существует
+        if [ -e "$TARGET" ] || [ -L "$TARGET" ]; then
+            # Если это реальная папка (не ссылка) — делаем бэкап
+            if [ -d "$TARGET" ] && [ ! -L "$TARGET" ]; then
+                mkdir -p "$BACKUP_DIR"
+                echo -e "${YELLOW}>>> Бэкап существующей папки $folder в $BACKUP_DIR${NC}"
+                mv "$TARGET" "$BACKUP_DIR/"
+            else
+                # Если это старая ссылка — удаляем её перед пересозданием
+                rm -rf "$TARGET"
+            fi
         fi
 
-        # Создаем симлинк (-s: ссылка, -n: не следовать за существующей ссылкой, -f: перезаписать)
+        # Создаем симлинк (используем полные пути для надежности)
         ln -snf "$SOURCE" "$TARGET"
-        echo -e "${GREEN}>>> Ссылка создана: $folder${NC}"
+        
+        # Проверка на успех
+        if [ -L "$TARGET" ]; then
+            echo -e "${GREEN}>>> Ссылка создана: $folder -> $SOURCE${NC}"
+        else
+            echo -e "${RED}>>> Ошибка при создании ссылки для $folder${NC}"
+        fi
     else
         echo -e "${RED}>>> Ошибка: Исходная папка $SOURCE не найдена!${NC}"
     fi
 done
 
-# 3. Финальный отчет
-if [ -d "$BACKUP_DIR" ]; then
-    echo -e "${BLUE}>>> Установка завершена. Бэкапы сохранены в: $BACKUP_DIR${NC}"
-else
-    echo -e "${BLUE}>>> Установка завершена. Бэкапы не потребовались.${NC}"
-fi
-
-echo -e "${GREEN}>>> Наслаждайтесь macOS-style Hyprland!${NC}"
+echo -e "${BLUE}>>> Установка завершена.${NC}"
