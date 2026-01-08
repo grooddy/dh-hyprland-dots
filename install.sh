@@ -7,14 +7,14 @@ YELLOW='\033[0;33m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-# Получаем абсолютный путь к папке скрипта (твои дотфайлы)
+# Полный путь к репозиторию
 DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-CONFIG_DIR="$HOME/.config"
 BACKUP_DIR="$HOME/.config_backup_$(date +%Y%m%d_%H%M%S)"
 
-# Зависимости и папки
+# Что проверяем и что линкуем
 DEPENDENCIES=("hyprland" "alacritty" "waybar" "swaync" "rofi")
-CONFIGS=("hypr" "alacritty" "waybar" "swaync" "rofi")
+# Важно: папку wallpapers положи в корень репозитория рядом с папкой config
+CONFIG_FOLDERS=("hypr" "alacritty" "waybar" "swaync" "rofi")
 
 echo -e "${BLUE}>>> Начало установки. Источник: $DOTFILES_DIR${NC}"
 
@@ -24,44 +24,54 @@ for pkg in "${DEPENDENCIES[@]}"; do
     if pacman -Qs "$pkg" > /dev/null; then
         echo -e "${GREEN}[OK]${NC} $pkg"
     else
-        echo -e "${YELLOW}[!]${NC} $pkg не найден"
+        echo -e "${YELLOW}[!]${NC} $pkg не найден${NC}"
     fi
 done
 
-# 2. Создание ссылок
-echo -e "${BLUE}>>> Настройка конфигураций...${NC}"
-mkdir -p "$CONFIG_DIR"
+# 2. Линковка конфигов (в ~/.config)
+echo -e "${BLUE}>>> Настройка конфигураций в ~/.config...${NC}"
+mkdir -p "$HOME/.config"
 
-for folder in "${CONFIGS[@]}"; do
-    TARGET="$CONFIG_DIR/$folder"
+for folder in "${CONFIG_FOLDERS[@]}"; do
+    TARGET="$HOME/.config/$folder"
     SOURCE="$DOTFILES_DIR/config/$folder"
 
     if [ -d "$SOURCE" ]; then
-        # Если цель уже существует
         if [ -e "$TARGET" ] || [ -L "$TARGET" ]; then
-            # Если это реальная папка (не ссылка) — делаем бэкап
             if [ -d "$TARGET" ] && [ ! -L "$TARGET" ]; then
                 mkdir -p "$BACKUP_DIR"
-                echo -e "${YELLOW}>>> Бэкап существующей папки $folder в $BACKUP_DIR${NC}"
+                echo -e "${YELLOW}>>> Бэкап существующей папки $folder...${NC}"
                 mv "$TARGET" "$BACKUP_DIR/"
             else
-                # Если это старая ссылка — удаляем её перед пересозданием
                 rm -rf "$TARGET"
             fi
         fi
-
-        # Создаем симлинк (используем полные пути для надежности)
         ln -snf "$SOURCE" "$TARGET"
-        
-        # Проверка на успех
-        if [ -L "$TARGET" ]; then
-            echo -e "${GREEN}>>> Ссылка создана: $folder -> $SOURCE${NC}"
-        else
-            echo -e "${RED}>>> Ошибка при создании ссылки для $folder${NC}"
-        fi
+        echo -e "${GREEN}>>> Ссылка создана: .config/$folder${NC}"
     else
-        echo -e "${RED}>>> Ошибка: Исходная папка $SOURCE не найдена!${NC}"
+        echo -e "${RED}>>> Ошибка: $SOURCE не найден!${NC}"
     fi
 done
 
-echo -e "${BLUE}>>> Установка завершена.${NC}"
+# 3. Линковка обоев (в ~/Pictures/Wallpapers)
+echo -e "${BLUE}>>> Настройка обоев...${NC}"
+WALL_SOURCE="$DOTFILES_DIR/wallpapers"
+WALL_TARGET="$HOME/Pictures/Wallpapers"
+
+if [ -d "$WALL_SOURCE" ]; then
+    mkdir -p "$HOME/Pictures"
+    if [ -e "$WALL_TARGET" ] || [ -L "$WALL_TARGET" ]; then
+        if [ -d "$WALL_TARGET" ] && [ ! -L "$WALL_TARGET" ]; then
+            echo -e "${YELLOW}>>> Бэкап существующих обоев...${NC}"
+            mv "$WALL_TARGET" "$HOME/Pictures/Wallpapers_bak_$(date +%Y%m%d)"
+        else
+            rm -rf "$WALL_TARGET"
+        fi
+    fi
+    ln -snf "$WALL_SOURCE" "$WALL_TARGET"
+    echo -e "${GREEN}>>> Обои слинкованы: ~/Pictures/Wallpapers -> $WALL_SOURCE${NC}"
+else
+    echo -e "${YELLOW}>>> Пропуск: Папка wallpapers не найдена в репозитории.${NC}"
+fi
+
+echo -e "${BLUE}>>> Установка завершена успешно!${NC}"
