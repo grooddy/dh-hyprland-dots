@@ -1,0 +1,18 @@
+{
+    "security.workspace.trust.untrustedFiles": "open",
+    "chat.commandCenter.enabled": false,
+    "workbench.navigationControl.enabled": false,
+    "window.commandCenter": false,
+    "workbench.secondarySideBar.defaultVisibility": "hidden",
+    "workbench.activityBar.location": "top",
+    "workbench.sideBar.location": "right",
+    "workbench.layoutControl.enabled": false,
+    "workbench.editor.tabActionLocation": "left",
+    "notebook.cellToolbarVisibility": "hover",
+    "notebook.globalToolbarShowLabel": "dynamic",
+    "debug.toolBarLocation": "docked",
+    "workbench.statusBar.visible": false,
+    "window.menuBarVisibility": "toggle",
+    "window.titleBarStyle": "native",
+    "window.customTitleBarVisibility": "never"
+}

@@ -14,7 +14,7 @@ BACKUP_DIR="$HOME/.config_backup_$(date +%Y%m%d_%H%M%S)"
 # Что проверяем и что линкуем
 DEPENDENCIES=("hyprland" "alacritty" "waybar" "swaync" "rofi")
 # Важно: папку wallpapers положи в корень репозитория рядом с папкой config
-CONFIG_FOLDERS=("hypr" "alacritty" "waybar" "swaync" "rofi")
+CONFIG_FOLDERS=("hypr" "alacritty" "waybar" "swaync" "rofi" "eww")
 
 echo -e "${BLUE}>>> Начало установки. Источник: $DOTFILES_DIR${NC}"
 

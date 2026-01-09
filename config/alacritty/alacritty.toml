@@ -28,6 +28,9 @@ thickness = 0.15
 background = "#1b1b1b" # Чуть мягче черного
 foreground = "#e0e0e0"
 
+[selection]
+save_to_clipboard = true
+
 [general]
 import = [
     "~/.cache/wal/colors-alacritty.toml" 

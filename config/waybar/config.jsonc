@@ -63,19 +63,24 @@
         "tooltip": false
     },
 
-    "pulseaudio": {
+"pulseaudio": {
         "format": "{icon} {volume}%",
         "format-muted": "󰝟",
         "format-icons": {
             "default": ["", "", ""]
         },
-        "on-click": "pavucontrol",
+        "on-click": "~/.config/hypr/scripts/volume_osd.sh", // Откроет ползунок при клике
+        "on-scroll-up": "pamixer -i 5 && ~/.config/hypr/scripts/volume_osd.sh",
+        "on-scroll-down": "pamixer -d 5 && ~/.config/hypr/scripts/volume_osd.sh",
         "tooltip": false
     },
 
     "backlight": {
         "format": "{icon} {percent}%",
         "format-icons": ["", "", "", "", "", "", ""],
+        "on-click": "~/.config/hypr/scripts/brightness_osd.sh", // Откроет ползунок при клике
+        "on-scroll-up": "brightnessctl set 5%+ && ~/.config/hypr/scripts/brightness_osd.sh",
+        "on-scroll-down": "brightnessctl set 5%- && ~/.config/hypr/scripts/brightness_osd.sh",
         "tooltip": false
     },
 
@@ -127,7 +132,7 @@
     },
 
     "tray": {
-        "icon-size": 16,
-        "spacing": 8
+        "icon-size": 18,
+        "spacing": 10
     }
 }

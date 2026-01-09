@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "astal": ["/usr/share/astal/gjs/astal/index.d.ts"],
+      "astal/*": ["/usr/share/astal/gjs/astal/*"]
+    }
+  }
+}

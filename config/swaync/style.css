@@ -1,63 +1,118 @@
 @import url("file:///home/dh/.cache/wal/colors-waybar.css");
 
 * {
-    font-family: "SF Pro Display", sans-serif;
+    font-family: "SF Pro Display", "SFProDisplay Nerd Font", sans-serif;
     color: white;
 }
 
+/* Главное окно центра управления */
 .control-center {
-    background: rgba(25, 25, 25, 0.5); 
+    background: rgba(20, 20, 20, 0.75); /* Плотное стекло */
     border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
+/* Общие контейнеры виджетов — уменьшены отступы (margin) */
 .widget-buttons-grid, .widget-volume, .widget-mpris {
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    margin: 12px 12px;
-    padding: 12px;
-}
-
-/* Кнопки */
-.widget-buttons-grid button {
     background: rgba(255, 255, 255, 0.06);
-    border-radius: 14px;
+    border-radius: 18px;
+    margin: 6px 12px; /* Меньше зазор между блоками по вертикали */
+    padding: 10px;
+}
+
+/* --- СЕТКА КНОПОК (Убираем "овальность") --- */
+.widget-buttons-grid {
+    padding: 4px;
+}
+
+.widget-buttons-grid button {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 16px; /* Мягкий квадрат как в iOS/macOS */
     margin: 4px;
-    min-height: 50px;
+    min-height: 52px; /* Фиксированная высота для предотвращения растягивания */
+    min-width: 52px;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
 }
 
-/* --- ПОЛЗУНКИ (Безопасная реализация macOS) --- */
-scale trough {
+.widget-buttons-grid button:hover {
     background: rgba(255, 255, 255, 0.15);
-    border-radius: 14px;
-    min-height: 26px;
-    min-width: 200px;
 }
 
-scale highlight {
+.widget-buttons-grid button:checked {
+    background: @color1;
+    color: white;
+}
+
+/* --- ПОЛЗУНОК ГРОМКОСТИ (Стал изящнее) --- */
+.widget-volume scale trough {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    min-height: 14px; /* Тонкий слайдер */
+}
+
+.widget-volume scale highlight {
     background: #ffffff;
-    border-radius: 14px;
+    border-radius: 10px;
 }
 
-/* Вместо margin: -24px, который злит GTK, просто обнуляем все визуальные параметры слайдера */
-scale slider {
+/* Скрываем стандартный круглый переключатель слайдера */
+.widget-volume scale slider {
     background: transparent;
     border: none;
     box-shadow: none;
-    min-height: 26px; /* Совпадает с высотой trough */
-    min-width: 0px;
     margin: 0;
-    padding: 0;
 }
 
-/* Плеер */
+/* --- ПЛЕЕР (Компактный вид) --- */
+.widget-mpris {
+    padding: 8px;
+}
+
+.widget-mpris-player {
+    padding: 4px;
+}
+
 .widget-mpris-album-art {
-    border-radius: 14px;
+    border-radius: 10px;
 }
 
-/* Уведомления */
+/* --- УВЕДОМЛЕНИЯ --- */
 .notification {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 14px;
-    margin: 5px 10px;
+    margin: 6px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.notification-content {
+    padding: 8px;
+}
+
+.summary {
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.body {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* --- ЗАГОЛОВОК "УВЕДОМЛЕНИЯ" --- */
+.widget-title {
+    margin: 8px 15px;
+}
+
+.widget-title > label {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.widget-title button {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 2px 10px;
+    font-size: 12px;
 }

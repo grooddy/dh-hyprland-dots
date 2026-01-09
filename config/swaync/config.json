@@ -5,10 +5,10 @@
   "layer": "overlay",
   "cssPriority": "application",
   "control-center-width": 350,
-  "control-center-height": 1024,
-  "control-center-margin-top": 12,     /* Маленький зазор от Waybar */
-  "control-center-margin-bottom": 12, /* Симметрия с gaps_out */
-  "control-center-margin-right": 12,  /* Симметрия с gaps_out */
+  "control-center-height": 1000,
+  "control-center-margin-top": 12,
+  "control-center-margin-bottom": 12,
+  "control-center-margin-right": 12,
   "widgets": [
     "buttons-grid",
     "mpris",
@@ -30,20 +30,18 @@
       "actions": [
         { "label": "󰖩", "command": "nm-connection-editor" },
         { "label": "󰂯", "command": "blueman-manager" },
-        { "label": "󰖔", "command": "bash $HOME/.config/hypr/scripts/theme-switch.sh" },
+        { "label": "󰖔", "command": "nohup bash $HOME/.config/hypr/scripts/theme-switch.sh & disown" },
         { "label": "󰕮", "command": "hyprpicker -a" },
-        { "label": "󰢮", "command": "bash $HOME/.config/hypr/scripts/gpu-switch.sh" },
-        { "label": "󰈐", "command": "bash $HOME/.config/hypr/scripts/asus-power.sh" },
-        { "label": "󰐥", "command": "wlogout" },
-        { "label": "  󰐽  \nЭкран", "command": "bash /home/dh/.config/hypr/scripts/refresh-switch.sh" },
-        { "label": "  󰖔  \nТема", "command": "bash /home/dh/.config/hypr/scripts/theme-switch.sh" },
-        { "label": "  󰸉  \nОбои", "command": "bash /home/dh/.config/hypr/scripts/change_wallpaper.sh" }
-
+        { "label": "󰢮", "command": "bash $HOME/.config/hypr/scripts/gpu-switch.sh & disown" },
+        { "label": "󰈐", "command": "bash $HOME/.config/hypr/scripts/asus-power.sh & disown" },
+        { "label": "󰐽", "command": "bash $HOME/.config/hypr/scripts/refresh-switch.sh & disown" },
+        { "label": "󰸉", "command": "nohup bash $HOME/.config/hypr/scripts/change_wallpaper.sh & disown" },
+        { "label": "󰐥", "command": "wlogout" }
       ]
     },
     "mpris": {
       "image-size": 80,
-      "image-radius": 15
+      "image-radius": 12
     },
     "notifications": {
        "label": "Уведомления"

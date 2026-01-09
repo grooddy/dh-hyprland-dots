@@ -1,0 +1,9 @@
+// Импортируем цвета, сгенерированные Pywal
+// Путь может отличаться, проверь где лежит твой colors.scss (обычно в ~/.cache/wal/)
+@import "/home/dh/.cache/wal/colors.scss";
+
+// Определяем алиасы для удобства
+$bg: $background;
+$fg: $foreground;
+$accent: $color4;
+$critical: $color1;

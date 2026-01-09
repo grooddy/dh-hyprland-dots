@@ -1,0 +1,14 @@
+{
+    "name": "tahoe-shell",
+    "type": "module",
+    "main": "app.ts",
+    "ags": {
+        "gtk": 4,
+        "external": [
+            "astal",
+            "astal/gtk4",
+            "gi://AstalGtk4",
+            "gi://Astal"
+        ]
+    }
+}

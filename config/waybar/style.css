@@ -1,19 +1,20 @@
 /* --- Шрифты --- */
 * {
     font-family: "SF Pro Display", "SFProDisplay Nerd Font", sans-serif;
-    font-size: 14px; /* Чуть крупнее, как в Mac */
+    font-size: 13px; /* Чуть крупнее, как в Mac */
     font-weight: 500;
     min-height: 0;
 }
 
 /* --- Главное окно (Сама панель) --- */
 window#waybar {
-    background: rgba(0, 0, 0, 0.25); /* Темное стекло */
+    background: rgba(20, 20, 20, 0.65); /* Темное стекло */
     /* Если хочешь светлую тему Mac: background: rgba(255, 255, 255, 0.6); */
     
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Тонкая линия снизу */
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);/* Тонкая линия снизу */
     color: #ffffff;
     transition: background-color 0.3s;
+    
 }
 
 /* Эффект блюра (размытия фона под панелью) задается в hyprland.conf через layerrule */
@@ -34,31 +35,30 @@ window#waybar {
 #custom-notification {
     background: transparent; /* Убираем фон "таблеток" */
     padding: 0 10px;         /* Отступы внутри текста */
-    margin: 4px 2px;         /* Отступы между элементами */
-    border-radius: 6px;      /* Скругление при наведении */
-    border: none;
-    box-shadow: none;
+    margin: 3px 2px;         /* Отступы между элементами */
+    border-radius: 4px;      /* Скругление при наведении */
+    transition: all 0.2s ease;
     color: #ffffff;
 }
 
 /* --- Логотип Apple --- */
 #custom-apple {
-    font-size: 18px;
-    padding-left: 16px;
-    padding-right: 16px;
-    margin-left: 0;
+    font-size: 16px;
+    padding-left: 15px;
+    padding-right: 12px;
 }
 
 /* --- Название окна (Как в Mac - жирное) --- */
 #window {
-    font-weight: 700; 
-    padding-left: 4px;
+    font-weight: 700; /* Имя активного приложения всегда жирное */
+    margin-left: 0;
+    padding-left: 5px;
 }
 
 /* --- Правая часть (Статус бар) --- */
 #clock {
-    font-weight: 600;
-    margin-right: 8px;
+    font-weight: 500;
+    padding-right: 15px;
 }
 
 #battery.charging, #battery.plugged {
@@ -81,7 +81,7 @@ window#waybar {
 #custom-power:hover,
 #language:hover,
 #custom-notification:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.18);
 }
 
 /* --- Tray --- */
@@ -90,4 +90,53 @@ window#waybar {
 }
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
+}
+/* Исправляем отступ Tray */
+#tray {
+    padding: 0 5px;
+}
+
+#tray menu {
+    background: rgba(25, 25, 25, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+}
+#tray {
+    padding: 0 10px;
+    margin: 3px 4px;
+}
+
+#tray > widget {
+    /* Добавляем немного отступа между самими иконками внутри трея */
+    padding: 0 4px;
+}
+
+#tray > widget:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+/* --- Группировка Hardware (GPU + PWR) --- */
+#group-hardware {
+    background: transparent;
+}
+
+/* --- Специфические отступы для иконок --- */
+#pulseaudio, #backlight, #battery {
+    font-size: 13px; /* Текст чуть меньше основного для баланса с иконками */
+}
+
+
+
+/* --- Языковой переключатель --- */
+#language {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+/* Центрирование текста в модулях (важно для кликов) */
+label {
+    background: transparent;
+    border: none;
+    box-shadow: none;
 }
