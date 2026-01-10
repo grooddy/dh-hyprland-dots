@@ -1,0 +1,55 @@
+;; Переменные
+(defvar volume_percent 0)
+(defvar brightness_percent 0)
+(defvar osd_hover false)
+
+;; Используем полный путь вместо $HOME или просто eww, если конфиг в дефолтной папке
+(defvar eww_run "eww -c /home/dh/.config/eww")
+
+(defwindow osd_vol
+  :monitor 0
+  :geometry (geometry :x "0%"
+                     :y "50px"
+                     :width "320px"
+                     :height "50px"
+                     :anchor "top center")
+  :stacking "overlay"
+  ;; Используем :onmouseenter и :onmouseleave для более четкого срабатывания
+  (eventbox :onmouseenter "${eww_run} update osd_hover=true"
+            :onmouseleave "${eww_run} update osd_hover=false"
+    (box :class "osd-box"
+         :orientation "h"
+         :space-evenly false
+         :valign "center"
+      (label :class "osd-icon" 
+             :text {volume_percent == 0 ? "󰝟" : "󰕾"})
+      (scale :class "osd-bar"
+             :value volume_percent
+             :min 0
+             :max 101
+             :onchange "pamixer --set-volume {} && ${eww_run} update volume_percent={}")
+      (label :class "osd-value" :text "${volume_percent}%")
+    )))
+
+(defwindow osd_bright
+  :monitor 0
+  :geometry (geometry :x "0%"
+                     :y "50px"
+                     :width "320px"
+                     :height "50px"
+                     :anchor "top center")
+  :stacking "overlay"
+  (eventbox :onmouseenter "${eww_run} update osd_hover=true"
+            :onmouseleave "${eww_run} update osd_hover=false"
+    (box :class "osd-box"
+         :orientation "h"
+         :space-evenly false
+         :valign "center"
+      (label :class "osd-icon" :text "󰃠")
+      (scale :class "osd-bar"
+             :value brightness_percent
+             :min 0
+             :max 101
+             :onchange "brightnessctl set {}% && ${eww_run} update brightness_percent={}")
+      (label :class "osd-value" :text "${brightness_percent}%")
+    )))

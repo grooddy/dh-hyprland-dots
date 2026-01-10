@@ -30,12 +30,11 @@
       "actions": [
         { "label": "󰖩", "command": "nm-connection-editor" },
         { "label": "󰂯", "command": "blueman-manager" },
-        { "label": "󰖔", "command": "nohup bash $HOME/.config/hypr/scripts/theme-switch.sh & disown" },
+        { "label": "󰖔", "command": "sh -c /home/dh/.config/hypr/scripts/mode-switch.sh" },
         { "label": "󰕮", "command": "hyprpicker -a" },
-        { "label": "󰢮", "command": "bash $HOME/.config/hypr/scripts/gpu-switch.sh & disown" },
-        { "label": "󰈐", "command": "bash $HOME/.config/hypr/scripts/asus-power.sh & disown" },
-        { "label": "󰐽", "command": "bash $HOME/.config/hypr/scripts/refresh-switch.sh & disown" },
-        { "label": "󰸉", "command": "nohup bash $HOME/.config/hypr/scripts/change_wallpaper.sh & disown" },
+        { "label": "󰢮", "command": "sh -c /home/dh/.config/hypr/scripts/gpu-switch.sh" },
+        { "label": "󰈐", "command": "sh -c /home/dh/.config/hypr/scripts/asus-power.sh" },
+        { "label": "󰸉", "command": "sh -c /home/dh/.config/hypr/scripts/wallpaper-change.sh" },
         { "label": "󰐥", "command": "wlogout" }
       ]
     },

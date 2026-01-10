@@ -2,41 +2,41 @@
 
 EWW_BIN="eww"
 EWW_CONF="$HOME/.config/eww"
-LOCK_FILE="/tmp/vol_osd_last_press"
+OSD_NAME="osd_vol"
 
-# 1. Получаем громкость
-VOL=$(pamixer --get-volume | tr -d '%')
+# 1. Если скрипт уже запущен — убиваем старую копию, чтобы сбросить таймер
+# Это эффективнее, чем проверка LOCK_FILE внутри цикла
+PID_FILE="/tmp/vol_osd.pid"
+if [ -f "$PID_FILE" ]; then
+    OLD_PID=$(cat "$PID_FILE")
+    kill "$OLD_PID" 2>/dev/null
+fi
+echo "$$" > "$PID_FILE"
+
+# 2. Получаем громкость
+VOL=$(pamixer --get-volume)
 [ -z "$VOL" ] && VOL=0
 
-# 2. Обновляем значение (используем кавычки для путей)
+# 3. Обновляем значение и открываем окно
 ${EWW_BIN} -c "${EWW_CONF}" update volume_percent="${VOL}"
 
-# 3. Открываем окно, если оно не открыто
-if ! ${EWW_BIN} -c "${EWW_CONF}" active-windows | grep -q "osd_vol"; then
-    ${EWW_BIN} -c "${EWW_CONF}" open osd_vol
+if ! ${EWW_BIN} -c "${EWW_CONF}" active-windows | grep -q "${OSD_NAME}"; then
+    ${EWW_BIN} -c "${EWW_CONF}" open "${OSD_NAME}"
 fi
 
-# 4. Логика таймера
-NOW=$(date +%s%N)
-echo "$NOW" > "$LOCK_FILE"
+# 4. Логика ожидания
+sleep 2
 
+# Бесконечный цикл проверки ховера (чтобы окно не закрылось, пока мышь на нем)
 while true; do
-    sleep 2
+    # Получаем значение и принудительно очищаем от кавычек и пробелов
+    IS_HOVERED=$(${EWW_BIN} -c "${EWW_CONF}" get osd_hover | sed 's/"//g' | xargs)
+
+    if [ "$IS_HOVERED" = "false" ] || [ -z "$IS_HOVERED" ]; then
+        ${EWW_BIN} -c "${EWW_CONF}" close "${OSD_NAME}"
+        rm -f "$PID_FILE"
+        exit 0
+    fi
     
-    # Проверяем, не нажал ли пользователь кнопку снова
-    LAST_ID=$(cat "$LOCK_FILE" 2>/dev/null)
-    if [ "$NOW" != "$LAST_ID" ]; then
-        exit 0
-    fi
-
-    # Считываем статус ховера и очищаем от лишних символов
-    IS_HOVERED=$(${EWW_BIN} -c "${EWW_CONF}" get osd_hover | tr -d '[:space:]' | tr -d '"')
-
-    # Если мышь не наведена — закрываем и выходим
-    if [ "$IS_HOVERED" = "false" ]; then
-        ${EWW_BIN} -c "${EWW_CONF}" close osd_vol
-        rm -f "$LOCK_FILE"
-        exit 0
-    fi
-    # Если true — цикл идет на следующий круг sleep
+    sleep 0.5 # Проверяем чаще, пока мышь наведена, чтобы мгновенно закрыть потом
 done

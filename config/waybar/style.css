@@ -1,142 +1,89 @@
-/* --- Шрифты --- */
+/* Подключаем цвета только для фона */
+@import "../../.cache/wal/colors-waybar.css";
+
 * {
+    border: none;
+    border-radius: 0;
     font-family: "SF Pro Display", "SFProDisplay Nerd Font", sans-serif;
-    font-size: 13px; /* Чуть крупнее, как в Mac */
-    font-weight: 500;
-    min-height: 0;
+    font-size: 13px;
+    font-weight: 600;
 }
 
-/* --- Главное окно (Сама панель) --- */
 window#waybar {
-    background: rgba(20, 20, 20, 0.65); /* Темное стекло */
-    /* Если хочешь светлую тему Mac: background: rgba(255, 255, 255, 0.6); */
-    
-    border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);/* Тонкая линия снизу */
+    /* Насыщенное темное стекло, независимое от яркости обоев */
+    background: rgba(20, 20, 20, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    /* Фиксируем белый цвет для 100% читаемости */
     color: #ffffff;
-    transition: background-color 0.3s;
-    
+    background: rgba(28, 28, 28, 0.65); /* Чуть более насыщенный серый */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    /* Тень под панелью для объема */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Эффект блюра (размытия фона под панелью) задается в hyprland.conf через layerrule */
-
-/* --- Модули (Общий сброс) --- */
-#custom-apple,
-#window,
-#clock,
-#battery,
-#pulseaudio,
-#backlight,
-#network,
-#bluetooth,
-#tray,
-#custom-gpu,
-#custom-power,
-#language,
-#custom-notification {
-    background: transparent; /* Убираем фон "таблеток" */
-    padding: 0 10px;         /* Отступы внутри текста */
-    margin: 3px 2px;         /* Отступы между элементами */
-    border-radius: 4px;      /* Скругление при наведении */
-    transition: all 0.2s ease;
-    color: #ffffff;
-}
-
-/* --- Логотип Apple --- */
+/* Элементы слева */
 #custom-apple {
-    font-size: 16px;
-    padding-left: 15px;
-    padding-right: 12px;
+    font-size: 18px;
+    padding: 0 12px 0 16px;
+    color: #ffffff;
 }
 
-/* --- Название окна (Как в Mac - жирное) --- */
 #window {
-    font-weight: 700; /* Имя активного приложения всегда жирное */
-    margin-left: 0;
-    padding-left: 5px;
+    font-weight: 800;
+    padding-left: 0;
+    /* Tahoe 26 выделяет активное окно небольшим свечением */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
-/* --- Правая часть (Статус бар) --- */
-#clock {
-    font-weight: 500;
-    padding-right: 15px;
-}
-
-#battery.charging, #battery.plugged {
-    color: #32d74b; /* Зеленый при зарядке */
-}
-
-#battery.critical:not(.charging) {
-    color: #ff3b30; /* Красный при разряде */
-}
-
-/* --- Эффект наведения (Hover) как в macOS --- */
-/* При наведении появляется легкая подложка */
-#custom-apple:hover,
-#window:hover,
-#clock:hover,
-#battery:hover,
-#pulseaudio:hover,
-#backlight:hover,
-#custom-gpu:hover,
-#custom-power:hover,
-#language:hover,
-#custom-notification:hover {
-    background: rgba(255, 255, 255, 0.18);
-}
-
-/* --- Tray --- */
-#tray > .passive {
-    -gtk-icon-effect: dim;
-}
-#tray > .needs-attention {
-    -gtk-icon-effect: highlight;
-}
-/* Исправляем отступ Tray */
-#tray {
-    padding: 0 5px;
-}
-
-#tray menu {
-    background: rgba(25, 25, 25, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-}
-#tray {
+/* Модули справа - создаем эффект сгруппированных линз */
+#pulseaudio, #backlight, #battery, #language, #custom-gpu, #custom-power, #clock, #custom-notification {
+    margin: 4px 2px;
     padding: 0 10px;
-    margin: 3px 4px;
+    /* Текст всегда белый, независимо от wal */
+    color: #ffffff; 
+}
+
+/* Разделяем визуально системные иконки и текст */
+#custom-gpu, #custom-power {
+    font-size: 11px;
+    opacity: 0.8;
+}
+
+/* Часы - делаем их более заметными */
+#clock {
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.1); /* Легкая подложка как в Tahoe */
+    border-radius: 6px;
+    margin-left: 5px;
+}
+
+/* Индикатор языка (US/UA) - делаем акцент цветом из wal */
+#language {
+    color: @color4; 
+    font-weight: 900;
+}
+
+/* Трей */
+#tray {
+    margin: 0 10px;
+    -gtk-icon-theme: "WhiteSur"; /* Или твой основной пак иконок */
 }
 
 #tray > widget {
-    /* Добавляем немного отступа между самими иконками внутри трея */
     padding: 0 4px;
 }
 
-#tray > widget:hover {
-    background: rgba(255, 255, 255, 0.15);
+/* Эффект при наведении - "мягкое стекло" */
+#custom-apple:hover, #window:hover, #clock:hover, #battery:hover, 
+#pulseaudio:hover, #backlight:hover, #language:hover, 
+#custom-notification:hover, #tray > widget:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 6px;
+}
+
+/* Критическое состояние */
+#battery.critical:not(.charging) {
+    background: #ff3b30;
+    color: white;
     border-radius: 4px;
-}
-/* --- Группировка Hardware (GPU + PWR) --- */
-#group-hardware {
-    background: transparent;
-}
-
-/* --- Специфические отступы для иконок --- */
-#pulseaudio, #backlight, #battery {
-    font-size: 13px; /* Текст чуть меньше основного для баланса с иконками */
-}
-
-
-
-/* --- Языковой переключатель --- */
-#language {
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-}
-
-/* Центрирование текста в модулях (важно для кликов) */
-label {
-    background: transparent;
-    border: none;
-    box-shadow: none;
 }
