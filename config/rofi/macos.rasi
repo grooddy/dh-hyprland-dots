@@ -1,5 +1,8 @@
-/* 1. Импорт цветов Pywal */
-@import "~/.cache/wal/colors-rofi-dark.rasi"
+/**
+ * ROFI Premium Glass Theme - Fixed Syntax
+ */
+
+@import "~/.cache/matugen/colors-rofi.rasi"
 
 configuration {
     modi: "drun";
@@ -7,16 +10,12 @@ configuration {
     display-drun: "";
     drun-display-format: "{name}";
     font: "SF Pro Display 13";
-    
-    /* Интерактивность */
     hover-select: true;
     me-select-entry: "";
     me-accept-entry: "MousePrimary";
 }
 
 * {
-    accent: @color1;
-    fg: @foreground;
     background-color: transparent;
     text-color: @fg;
     margin: 0;
@@ -25,90 +24,81 @@ configuration {
 }
 
 window {
-    width: 680px; /* Spotlight чуть шире стандартных лаунчеров */
-    border-radius: 18px;
-    background-color: rgba(25, 25, 25, 0.7); /* Более плотный фон для лучшего блюра */
+    width: 680px;
+    border-radius: 32px;
+    background-color: @bg; 
+    
+    /* Вместо rgba используем HEX с прозрачностью: #ffffff24 (примерно 14%) */
     border: 1px;
-    border-color: rgba(255, 255, 255, 0.15);
+    border-color: #ffffff24;
+    
     location: center;
     anchor: center;
-    y-offset: -200px; /* Spotlight всегда выше центра */
+    y-offset: -150px;
 }
 
 mainbox {
     children: [ inputbar, listview ];
 }
 
-/* --- Поле ввода (Spotlight Bar) --- */
 inputbar {
-    padding: 20px 24px;
-    spacing: 20px;
+    padding: 35px 40px 25px 40px;
+    spacing: 18px;
     children: [ prompt, entry ];
-    /* Линия разделения только если есть результаты */
 }
 
 prompt {
-    text-color: rgba(255, 255, 255, 0.6);
-    font: "SF Pro Display 22"; /* Большая иконка поиска */
+    text-color: @accent; 
+    font: "SF Pro Display 24";
     vertical-align: 0.5;
 }
 
 entry {
-    placeholder: "Search";
-    placeholder-color: rgba(255, 255, 255, 0.2);
-    font: "SF Pro Display 22";
+    placeholder: "Search applications...";
+    placeholder-color: #ffffff40; /* 25% прозрачности белого */
+    font: "SF Pro Display 24";
+    font-weight: 600;
     vertical-align: 0.5;
-    text-color: #ffffff;
+    text-color: @fg;
 }
 
-/* --- Список приложений --- */
 listview {
-    lines: 8;
+    lines: 7;
     columns: 1;
     fixed-height: false;
-    padding: 8px 12px 12px 12px;
-    spacing: 4px;
+    padding: 10px 20px 25px 20px;
+    spacing: 6px;
     scrollbar: false;
-    /* Убираем верхнюю границу если список пуст */
     border: 1px 0 0 0;
-    border-color: rgba(255, 255, 255, 0.05);
+    border-color: #ffffff14; /* 8% прозрачности */
 }
 
 element {
-    padding: 8px 12px;
-    border-radius: 10px;
-    spacing: 15px;
-    background-color: transparent; 
-    border-color: transparent;
-    border: 1px;
+    padding: 12px 20px;
+    border-radius: 18px;
+    spacing: 16px;
 }
 
 element-icon {
-    size: 42px; /* Крупные иконки как в macOS */
-    cursor: pointer;
+    size: 48px;
 }
 
 element-text {
     vertical-align: 0.5;
-    font: "SF Pro Display 15"; /* Текст приложений чуть крупнее */
-    cursor: pointer;
-    text-color: #ffffff;
-}
-
-/* --- Состояния выбора --- */
-element normal.normal, 
-element alternate.normal {
-    background-color: transparent;
-    text-color: @fg;
+    font: "SF Pro Display 16";
+    font-weight: 600;
+    text-color: inherit;
 }
 
 element selected.normal {
-    /* Синий акцент Apple или твой цвет из Wal */
-    background-color: rgba(255, 255, 255, 0.1); 
-    border-color: rgba(255, 255, 255, 0.1);
+    background-color: @accent;
+    text-color: @on-accent;
+    border: 1px;
+    border-color: #ffffff33; /* 20% прозрачности для блика */
 }
 
-/* При наведении мышкой (без клика) делаем легкое подсвечивание */
-element mouse-hover {
-    background-color: rgba(255, 255, 255, 0.1);
+element normal.active,
+element alternate.active {
+    background-color: #ffffff0d; /* Едва заметный фон (5%) */
+    text-color: @accent;
 }

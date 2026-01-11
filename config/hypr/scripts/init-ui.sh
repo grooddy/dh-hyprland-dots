@@ -1,33 +1,35 @@
 #!/bin/bash
+# Путь: ~/.config/hypr/scripts/init-ui.sh
 
-# 1. Путь к кэшу последних обоев
-WAL_CACHE="$HOME/.cache/wal/wal"
+# 1. Параметры
+WALL_DIR="$HOME/Pictures/Wallpapers"
+# Берем последние использованные обои или случайные, если кэш пуст
+[ -f "$HOME/.cache/swww/default" ] && WALLPAPER=$(cat "$HOME/.cache/swww/default") || WALLPAPER=$(find "$WALL_DIR" -type f | shuf -n 1)
 
-# Если кэша нет (первый запуск), вызываем рандомайзер и выходим
-if [ ! -f "$WAL_CACHE" ]; then
-    bash ~/.config/hypr/scripts/wallpaper-change.sh
-    exit 0
-fi
-
-# 2. Считываем сохраненные данные
-WALLPAPER=$(cat "$WAL_CACHE")
-CURRENT_MODE=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")
-[[ "$CURRENT_MODE" == *"light"* ]] && MODE="light" || MODE="dark"
-
-# 3. Инициализируем hyprpaper, если он не запущен
-if ! pgrep -x "hyprpaper" > /dev/null; then
-    echo "preload = $WALLPAPER" > /tmp/hyprpaper.conf
-    echo "wallpaper = eDP-1,$WALLPAPER" >> /tmp/hyprpaper.conf
-    hyprpaper -c /tmp/hyprpaper.conf &
+# 2. Инициализация swww (демон для обоев)
+if ! pgrep -x "swww-daemon" > /dev/null; then
+    swww-daemon --format xrgb &
     sleep 0.5
 fi
 
-# 4. Применяем цвета Pywal (восстанавливаем из кэша)
-wal -i "$WALLPAPER" ${MODE:+"${MODE/light/-l}"} -n -q --backend wal > /dev/null 2>&1
+# 3. Установка обоев с премиальным переходом (эффект "раскрытия" из центра)
+swww img "$WALLPAPER" \
+    --transition-type grow \
+    --transition-pos 0.5,0.5 \
+    --transition-step 90 \
+    --transition-duration 1.5
 
-# 5. Обновляем интерфейсы
-pkill -SIGUSR2 waybar
-swaync-client -rs > /dev/null 2>&1
+# 4. Генерация темы Matugen
+# Автоматически определяем темную/светлую тему из системы
+CURRENT_MODE=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")
+[[ "$CURRENT_MODE" == *"light"* ]] && MODE="light" || MODE="dark"
 
-# 6. Уведомление о восстановлении сессии
-notify-send -a "DH UI" "Сессия восстановлена" "Theme: ${MODE^}"
+echo "Applying Matugen with $MODE mode..."
+matugen image "$WALLPAPER" -m "$MODE"
+
+# 5. Синхронизация остальных компонентов
+# Вызываем colors-update.sh для обновления Waybar, SwayNC и т.д.
+bash "$HOME/.config/hypr/scripts/colors-update.sh"
+
+# 6. Опционально: Обновление курсора (чтобы не баговал при старте)
+hyprctl setcursor WhiteSur 24

@@ -1,0 +1,6 @@
+:root {
+    --matugen-bg: {{colors.surface.default.hex}};
+    --matugen-fg: {{colors.on_surface.default.hex}};
+    --matugen-primary: {{colors.primary.default.hex}};
+    --matugen-accent: {{colors.primary_container.default.hex}};
+}

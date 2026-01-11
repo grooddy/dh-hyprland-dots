@@ -1,254 +1,279 @@
-/* Импорт цветов из wal для акцентов */
-@import url("file:///home/dh/.cache/wal/colors-waybar.css");
+/* 1. Динамические цвета Matugen */
+@import "../../.cache/matugen/colors-waybar.css";
 
+/* 2. Глобальный сброс */
 * {
     font-family: "SF Pro Display", "SFProDisplay Nerd Font", sans-serif;
-    /* Фиксируем белый текст для чистоты стиля */
-    color: #ffffff;
+    color: @text;
+    box-shadow: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Главное окно — эффект "Deep Glass" */
+/* 3. Главное окно Control Center — Эффект глубокого стекла */
 .control-center {
-    background: rgba(22, 22, 22, 0.7); /* Чуть светлее, чтобы блюр играл лучше */
-    border-radius: 24px; /* Более скругленные углы в стиле 2026 года */
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    background: alpha(@surface, 0.65); /* Чуть плотнее, чем бар */
+    border-radius: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Тонкий контур как у Waybar */
+    /* Внутренний блик для объема */
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 
+                0 15px 40px rgba(0, 0, 0, 0.2); 
 }
 
-/* Скрываем лишние тени и отступы */
 .control-center-list {
     background: transparent;
 }
 
-/* Общие блоки виджетов */
-.widget-buttons-grid, .widget-volume, .widget-mpris {
-    background: rgba(255, 255, 255, 0.04);
-    border-radius: 20px;
-    margin: 8px 16px;
-    padding: 12px;
-    border: 0.5px solid rgba(255, 255, 255, 0.05);
+/* 4. Виджеты: Плеер, Громкость, Сетка (Стеклянные вставки) */
+.widget-buttons-grid, 
+.widget-volume, 
+.widget-mpris {
+    background: alpha(@surface, 0.4); 
+    border-radius: 22px;
+    margin: 10px 15px;
+    padding: 15px;
+    /* Эффект вдавленного стекла */
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1);
 }
 
-/* --- СЕТКА КНОПОК (macOS Control Center Style) --- */
+/* --- СЕТКА КНОПОК --- */
 .widget-buttons-grid button {
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 14px; /* Мягкие квадраты */
+    background: alpha(@text, 0.06);
+    border-radius: 16px;
     margin: 6px;
     min-height: 55px;
-    min-width: 55px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .widget-buttons-grid button:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: scale(1.02);
+    background: alpha(@text, 0.12);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
-/* Активная кнопка (включен WiFi/BT) — используем акцент из wal */
 .widget-buttons-grid button:checked {
-    background: @color4; 
-    color: #ffffff;
-    box-shadow: 0 0 15px alpha(@color4, 0.4);
+    background: @primary;
+    color: @on_primary;
 }
 
-/* --- СЛАЙДЕР ГРОМКОСТИ (iOS/macOS Vertical-like Style) --- */
+/* --- СЛАЙДЕР ГРОМКОСТИ --- */
 .widget-volume scale trough {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    min-height: 16px;
+    background: alpha(@text, 0.1);
+    border-radius: 20px;
+    min-height: 12px;
 }
 
 .widget-volume scale highlight {
-    background: #ffffff; /* Чистый белый акцент для громкости */
-    border-radius: 12px;
+    background: @primary;
+    border-radius: 20px;
 }
 
-/* --- ПЛЕЕР --- */
-.widget-mpris {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.widget-mpris-album-art {
-    border-radius: 14px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.widget-mpris-title {
-    font-weight: 800;
-    font-size: 15px;
-}
-
-.widget-mpris-subtitle {
-    font-size: 12px;
-    opacity: 0.7;
-}
-
-
-/* --- УВЕДОМЛЕНИЯ TAHOE 2026 --- */
+/* --- УВЕДОМЛЕНИЯ (The Diamond Look) --- */
 .notification {
-    /* Глубокое матовое стекло */
-    background: rgba(25, 25, 25, 0.45); 
-    border-radius: 22px;
-    margin: 10px 14px;
-    padding: 0; /* Убираем падинг тут, чтобы контент сидел плотнее */
-    
-    /* Тонкая двойная граница для эффекта объема */
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    margin: 10px 0px;
+    background: alpha(@surface, 0.5); 
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    /* Каждое уведомление имеет свой легкий блик сверху */
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
-/* Избавляемся от всех системных "шаров" и подсветок */
-.notification-default-action, 
-.notification-default-action:hover,
-.notification button,
-.notification button:hover {
-    background: transparent;
-    box-shadow: none;
-    border: none;
-    border-radius: 22px;
-}
-
-/* Контент уведомления */
-.notification-content {
-    padding: 16px;
+.notification-default-action {
+    border-radius: 20px;
+    padding: 14px;
     background: transparent;
 }
 
-/* Заголовок (Summary) */
+.notification-default-action:hover {
+    background: alpha(@text, 0.04);
+}
+
 .summary {
-    font-weight: 600;
-    font-size: 14.5px;
-    color: #ffffff;
-    /* Легкая тень текста для читаемости на любом блюре */
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    font-weight: 700;
+    font-size: 14px;
+    color: @text;
 }
 
-/* Основной текст (Body) */
 .body {
-    font-size: 13px;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.8);
-    margin-top: 4px;
-    line-height: 1.4;
+    font-size: 12.5px;
+    opacity: 0.8;
 }
 
-/* Время */
-.time {
-    font-size: 11px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.35);
-    margin-right: 12px;
-}
-
-/* Иконка уведомления */
-.notification-icon {
-    margin-right: 12px;
-    border-radius: 10px; /* Скругление иконок приложений */
-}
-
-/* Эффект при наведении на все уведомление */
-.notification:hover {
-    /* Легкое высветление, как в macOS */
-    background: rgba(45, 45, 45, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-}
-
-/* Текст становится чуть приглушеннее при наведении, акцентируя внимание на карточке */
-.notification:hover .body {
-    color: rgba(255, 255, 255, 0.7);
-}
-
-/* Кнопка закрытия (крестик) */
+/* Кнопка закрытия */
 .close-button {
-    background: rgba(255, 255, 255, 0.08);
-    color: white;
-    text-shadow: none;
-    padding: 2px;
+    background: alpha(@text, 0.08);
     border-radius: 100%;
-    margin-top: 10px;
-    margin-right: 10px;
-    box-shadow: none;
-    border: none;
-    min-width: 20px;
-    min-height: 20px;
+    margin: 8px;
+    padding: 2px;
 }
 
 .close-button:hover {
-    background: rgba(235, 77, 75, 0.8); /* Красный оттенок при наведении на закрытие */
-}
-
-
-
-
-/* --- ЗАГОЛОВКИ --- */
-.widget-title {
-    margin: 15px 20px 5px 20px;
-}
-
-.widget-title > label {
-    font-size: 18px;
-    font-weight: 800;
-}
-
-/* Кнопка "Очистить все" */
-.widget-title button {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    padding: 4px 12px;
-    transition: all 0.2s;
-}
-
-.widget-title button:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-
-
-
-
-
-
-
-
-/* --- ГРУППИРОВКА УВЕДОМЛЕНИЙ --- */
-
-/* Убираем фон самого контейнера группы */
-.notification-group {
-    background: transparent;
-    box-shadow: none;
-    border: none;
-}
-
-/* Настраиваем заголовки групп (где название приложения) */
-.notification-group-headers {
-    background: transparent;
-    margin: 5px 15px;
-    padding: 0;
-}
-
-/* Текст названия приложения в группе */
-.notification-group-headers > label {
-    font-size: 11px;
-    font-weight: 800;
-    margin-left: 5px;
-    color: rgba(255, 255, 255, 0.5); /* Приглушенный заголовок в стиле macOS */
-    max-width: none;
-}
-
-/* Убираем фон кнопок внутри группы (развернуть/очистить) */
-.notification-group-headers button {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
+    background: #ff3b30;
     color: white;
 }
 
-.notification-group-headers button:hover {
-    background: rgba(255, 255, 255, 0.15);
+/* --- ЗАГОЛОВКИ --- */
+.widget-title {
+    margin: 20px 25px 5px 25px;
 }
 
-/* Сглаживаем отступы между сгруппированными уведомлениями */
+.widget-title > label {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.widget-title button {
+    background: alpha(@primary, 0.15);
+    color: @primary;
+    border-radius: 12px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* Плеер (MPRIS) */
+.widget-mpris-title { font-weight: 800; font-size: 15px; }
+.widget-mpris-subtitle { opacity: 0.7; font-size: 13px; }
+
+ /* Группировка (Эффект стопки) */
+
+.notification-group {
+
+    background: transparent;
+
+} 
+ .notification-group-headers {
+
+background: transparent;
+
+} 
+
+/* Группировка (Эффект стопки карт) */
 .notification-group.collapsed .notification:not(:first-child) {
-    margin-top: -35px; /* Эффект "стопки" карточек */
-    filter: brightness(0.8); /* Нижние карточки чуть темнее */
+    margin-top: -34px;
+    filter: brightness(0.8);
+    scale: 0.96;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@import "../../.cache/matugen/colors-waybar.css";
+
+* {
+    font-family: "SF Pro Display", "JetBrainsMono Nerd Font", sans-serif;
+    color: @text;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Главное окно — единый кусок премиального стекла */
+.control-center {
+    background: alpha(@surface, 0.7);
+    border-radius: 18px; /* Радиус меньше, чтобы соответствовать Waybar */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Виджеты внутри — эффект "вырезанных" слоев */
+.widget-buttons-grid, 
+.widget-volume, 
+.widget-mpris {
+    background: alpha(@white, 0.04);
+    border-radius: 14px;
+    margin: 4px 10px;
+    padding: 10px; /* Уменьшили паддинг */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* СЕТКА КНОПОК — как в iOS/macOS Control Center */
+.widget-buttons-grid button {
+    background: alpha(@text, 0.05);
+    border-radius: 10px;
+    margin: 3px;
+    min-height: 45px; /* Сделали ниже */
+}
+
+.widget-buttons-grid button:hover {
+    background: alpha(@text, 0.1);
+}
+
+.widget-buttons-grid button:checked {
+    background: @primary;
+    color: @on_primary;
+}
+
+/* УВЕДОМЛЕНИЯ — Чистые карточки */
+.notification {
+    background: alpha(@surface, 0.5);
+    border-radius: 12px;
+    margin: 4px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.notification-content {
+    padding: 10px;
+}
+
+.notification-default-action:hover {
+    background: alpha(@white, 0.05);
+    border-radius: 18px;
+}
+
+/* Заголовки и текст */
+.summary { font-size: 13px; font-weight: 700; }
+.body { font-size: 12px; opacity: 0.8; }
+
+/* Плеер (MPRIS) — Акцент на обложке */
+.widget-mpris {
+    background: alpha(@primary, 0.1);
+    padding: 8px;
+}
+
+.widget-mpris-player {
+    padding: 6px;
+}
+
+/* Слайдер громкости — Неоморфизм */
+.widget-volume scale trough {
+    background: alpha(@text, 0.1);
+    border-radius: 8px;
+    min-height: 8px;
+}
+
+.widget-volume scale highlight {
+    background: @primary;
+    border-radius: 10px;
+}
+
+/* Заголовок центра управления */
+.widget-title {
+    margin: 10px 15px 5px 15px;
+}
+
+.widget-title > label {
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.widget-title button {
+    background: transparent;
+    color: @primary;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.widget-title button:hover {
+    opacity: 0.6;
 }

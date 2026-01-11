@@ -1,0 +1,18 @@
+[config]
+# Пустая секция config обязательна в новых версиях
+
+[templates.waybar]
+input_path = '~/.config/matugen/templates/colors-waybar.css'
+output_path = '~/.cache/matugen/colors-waybar.css'
+
+[templates.rofi]
+input_path = '~/.config/matugen/templates/colors-rofi.rasi'
+output_path = '~/.cache/matugen/colors-rofi.rasi'
+
+[templates.alacritty]
+input_path = '~/.config/matugen/templates/alacritty.toml'
+output_path = '~/.cache/matugen/alacritty-colors.toml'
+
+[templates.eww]
+input_path = '~/.config/matugen/templates/eww-colors.scss'
+output_path = '~/.cache/matugen/eww-colors.scss'

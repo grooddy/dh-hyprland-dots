@@ -14,5 +14,50 @@
     "workbench.statusBar.visible": false,
     "window.menuBarVisibility": "toggle",
     "window.titleBarStyle": "native",
-    "window.customTitleBarVisibility": "never"
+    "window.customTitleBarVisibility": "never",
+
+    // Убираем индикаторы изменений (синие/зеленые полоски у края) — делает вид чище
+    "scm.diffDecorations": "gutter",
+    // Скрываем номера строк, если ты ориентируешься по памяти или используешь относительные
+    // "editor.lineNumbers": "off", 
+    // Убираем "хлебные крошки" (путь к файлу сверху), раз есть вкладки
+    "breadcrumbs.enabled": false,
+    // Убираем миникарту — в узких окнах она только мешает
+    "editor.minimap.enabled": false,
+    // Убираем иконки типов файлов в редакторе (опционально, для пущей чистоты)
+    "workbench.editor.showIcons": false,
+
+    "editor.fontFamily": "'JetBrainsMono Nerd Font', 'SF Pro Display', monospace",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 14,
+    "editor.lineHeight": 22, // Больше межстрочного интервала = легче читать
+    "editor.letterSpacing": 0.5,
+    "editor.cursorBlinking": "smooth", // Плавное мигание курсора (очень премиально)
+    "editor.cursorSmoothCaretAnimation": "on", // Плавное движение курсора при печати
+    "editor.smoothScrolling": true, // Плавный скролл
+    "workbench.list.smoothScrolling": true,
+    "terminal.integrated.smoothScrolling": true,
+
+    // Плавная анимация каретки (самый важный пункт)
+    "editor.cursorSmoothCaretAnimation": "on", 
+    "editor.cursorBlinking": "smooth",
+
+    // Плавный скролл везде
+    "editor.smoothScrolling": true,
+    "workbench.list.smoothScrolling": true,
+    "terminal.integrated.smoothScrolling": true,
+
+    // Плавное появление предложений (IntelliSense)
+    "editor.suggest.fadeStyle": true,
+    
+    // Плавная фокусировка (убирает резкие перескоки)
+    "workbench.view.alwaysShowEditorActions": false,
+    "workbench.colorTheme": "Visual Studio Dark",
+    "window.titleBarStyle": "native",
+    "workbench.colorCustomizations": {
+        "editor.background": "#00000000",
+        "sideBar.background": "#00000000",
+        "terminal.background": "#00000000"
+    }
+
 }

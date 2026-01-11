@@ -1,24 +1,39 @@
 #!/bin/bash
 # Путь: ~/.config/hypr/scripts/colors-update.sh
 
-# 1. Получаем текущие данные
-WALLPAPER=$(cat "$HOME/.cache/wal/wal")
+# 1. Определяем текущие обои и режим
+# Если используешь swww, вытягиваем текущий файл. Если нет — берем из кеша.
+WALLPAPER=$(swww query | awk -F 'image: ' '{print $2}')
+[ -z "$WALLPAPER" ] && WALLPAPER=$(cat "$HOME/.cache/swww/default") # Фолбэк
+
 CURRENT_MODE=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")
 [[ "$CURRENT_MODE" == *"light"* ]] && MODE="light" || MODE="dark"
 
-# 2. Запускаем Pywal (без применения к терминалу)
-wal -i "$WALLPAPER" ${MODE:+"${MODE/light/-l}"} -n -q --backend wal > /dev/null 2>&1
-sleep 0.3
+# 2. Запускаем Matugen
+# -m устанавливает режим (dark/light)
+# -c указывает путь к конфигу (если есть)
+matugen image "$WALLPAPER" -m "$MODE" > /dev/null 2>&1
 
-# 3. Обновляем софт
+# 3. Даем долям секунды на запись файлов в ~/.cache/matugen/
+sleep 0.2
+
+# 4. Обновляем компоненты
+# Waybar (отправляем сигнал для перезагрузки CSS)
 pkill -SIGUSR2 waybar
+
+# SwayNC (перезагружаем стили)
 swaync-client -rs > /dev/null 2>&1
 
-# Обновление Firefox (Pywalfox)
+# Firefox (если используешь Pywalfox, он может конфликтовать с Matugen напрямую, 
+# но если есть скрипт-прослойка, запускаем его здесь)
 if command -v pywalfox &> /dev/null; then
-    python3 -m pywalfox update > /dev/null 2>&1
+    pywalfox update > /dev/null 2>&1
 fi
 
-# 4. Уведомление
+# 5. Премиальное уведомление
 WALL_NAME=$(basename "$WALLPAPER")
-notify-send  -a "DH UI" -i "$WALLPAPER" "DH UI" "Mode: ${MODE^}\nWallpaper: $WALL_NAME\nColors: Updated"
+notify-send -a "System UI" \
+            -i "$WALLPAPER" \
+            -t 3000 \
+            "Design Updated" \
+            "Theme: ${MODE^}\nPalette: Material You (Matugen)\nWallpaper: $WALL_NAME"

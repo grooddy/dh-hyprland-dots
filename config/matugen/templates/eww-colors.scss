@@ -1,0 +1,6 @@
+@define-color primary_col {{colors.primary.default.hex}};
+@define-color surface_col {{colors.surface.default.hex}};
+@define-color text_col {{colors.on_surface.default.hex}};
+$primary_col: {{colors.primary.default.hex}};
+$surface_col: {{colors.surface.default.hex}};
+$text_col: {{colors.on_surface.default.hex}};

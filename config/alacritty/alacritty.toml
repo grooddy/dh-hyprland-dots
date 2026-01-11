@@ -1,12 +1,17 @@
+[general]
+# Импортируем динамические цвета Matugen
+import = ["~/.cache/matugen/alacritty-colors.toml"]
+live_config_reload = true
+
 [window]
-opacity = 0.92
-blur = true
-padding = { x = 20, y = 20 }
+# Прозрачность для эффекта стекла
+opacity = 0.7
+padding = { x = 25, y = 25 }
 decorations = "None"
 dynamic_padding = true
 
 [font]
-size = 11.5 # 12 может быть крупноват для 1080p
+size = 11.5
 
 [font.normal]
 family = "JetBrainsMono Nerd Font"
@@ -18,21 +23,16 @@ style = "Bold"
 
 [font.offset]
 x = 0
-y = 1 # Важно для вертикальных отступов
+y = 1
 
 [cursor]
-style = { shape = "Block", blinking = "On" }
+style = { shape = "Beam", blinking = "On" } # Тонкая линия (I-Beam) выглядит современнее
 thickness = 0.15
-
-[colors.primary]
-background = "#1b1b1b" # Чуть мягче черного
-foreground = "#e0e0e0"
 
 [selection]
 save_to_clipboard = true
 
-[general]
-import = [
-    "~/.cache/wal/colors-alacritty.toml" 
-]
-live_config_reload = true
+[colors.primary]
+# Это создаст темную подложку под текстом, даже если Matugen выдал светлые цвета
+background = "#1a1b26" 
+foreground = "#ffffff"

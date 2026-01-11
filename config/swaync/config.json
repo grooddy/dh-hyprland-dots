@@ -4,11 +4,11 @@
   "positionY": "top",
   "layer": "overlay",
   "cssPriority": "application",
-  "control-center-width": 350,
-  "control-center-height": 1000,
-  "control-center-margin-top": 12,
-  "control-center-margin-bottom": 12,
-  "control-center-margin-right": 12,
+  "control-center-width": 340,
+  "control-center-height": 800,
+  "control-center-margin-top": 8,
+  "control-center-margin-bottom": 8,
+  "control-center-margin-right": 10,
   "widgets": [
     "buttons-grid",
     "mpris",
@@ -18,9 +18,9 @@
   ],
   "widget-config": {
     "title": {
-      "text": "Уведомления",
+      "text": "Центр управления",
       "clear-all-button": true,
-      "button-text": "󰎟"
+      "button-text": "󰎟 Очистить"
     },
     "volume": {
       "label": "󰕾",
@@ -35,12 +35,13 @@
         { "label": "󰢮", "command": "sh -c /home/dh/.config/hypr/scripts/gpu-switch.sh" },
         { "label": "󰈐", "command": "sh -c /home/dh/.config/hypr/scripts/asus-power.sh" },
         { "label": "󰸉", "command": "sh -c /home/dh/.config/hypr/scripts/wallpaper-change.sh" },
+        { "label": "Hz", "command": "sh -c /home/dh/.config/hypr/scripts/refresh-switch.sh" },
         { "label": "󰐥", "command": "wlogout" }
       ]
     },
     "mpris": {
       "image-size": 80,
-      "image-radius": 12
+      "image-radius": 14
     },
     "notifications": {
        "label": "Уведомления"
