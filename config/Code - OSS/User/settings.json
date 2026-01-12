@@ -58,6 +58,7 @@
         "editor.background": "#00000000",
         "sideBar.background": "#00000000",
         "terminal.background": "#00000000"
-    }
+    },
+    "git.enableSmartCommit": true
 
 }
