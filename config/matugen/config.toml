@@ -16,3 +16,7 @@ output_path = '~/.cache/matugen/alacritty-colors.toml'
 [templates.eww]
 input_path = '~/.config/matugen/templates/eww-colors.scss'
 output_path = '~/.cache/matugen/eww-colors.scss'
+
+[templates.hyprland]
+input_path = '~/.config/matugen/templates/hyprland.conf'
+output_path = '~/.cache/matugen/colors-hyprland.conf'
