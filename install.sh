@@ -11,8 +11,8 @@ NC='\033[0m'
 DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 BACKUP_DIR="$HOME/.config_backup_$(date +%Y%m%d_%H%M%S)"
 
-DEPENDENCIES=("hyprland" "alacritty" "waybar" "swaync" "rofi" "matugen" "pamixer" "brightnessctl" "eww")
-CONFIG_FOLDERS=("hypr" "alacritty" "waybar" "swaync" "rofi" "matugen" "eww")
+DEPENDENCIES=("hyprland" "alacritty" "waybar" "swaync" "rofi" "matugen" "pamixer" "brightnessctl" "eww" "wlogout")
+CONFIG_FOLDERS=("hypr" "alacritty" "waybar" "swaync" "rofi" "matugen" "eww" "wlogout")
 
 echo -e "${BLUE}>>> Начало установки. Источник: $DOTFILES_DIR${NC}"
 

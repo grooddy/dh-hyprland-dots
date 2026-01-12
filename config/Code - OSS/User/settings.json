@@ -14,7 +14,6 @@
     "workbench.statusBar.visible": false,
     "window.menuBarVisibility": "toggle",
     "window.titleBarStyle": "native",
-    "window.customTitleBarVisibility": "never",
 
     // Убираем индикаторы изменений (синие/зеленые полоски у края) — делает вид чище
     "scm.diffDecorations": "gutter",

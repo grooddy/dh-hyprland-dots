@@ -1,39 +1,45 @@
-/* Импорт твоих цветов из Pywal */
-@import url("file:///home/dh/.cache/wal/colors-waybar.css");
+/* 1. Динамические цвета Matugen */
+@import "../../.cache/matugen/colors-waybar.css";
 
-/* Общие настройки */
+/* 2. Общие настройки */
 * {
+    font-family: "SF Pro Display", "SFProDisplay Nerd Font", sans-serif;
     background-image: none;
-    font-family: "SF Pro Display", sans-serif;
+    transition: all 0.2s ease-in-out; /* Плавный переход */
 }
 
 window {
-    background-color: rgba(0, 0, 0, 0.2); /* Очень легкое затемнение, остальное сделает blur */
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
-/* Настройка кнопок */
+/* 3. Кнопки */
 button {
-    background-color: alpha(@background, 0.3);
-    color: @foreground;
-    border: 1px solid alpha(@foreground, 0.1);
-    border-radius: 20px;
-    margin: 15px;
+    color: @text;
+    background-color: alpha(@surface, 0.4); 
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    margin: 20px; /* Базовый отступ */
     background-repeat: no-repeat;
     background-position: center;
     background-size: 25%;
-    box-shadow: none;
-    text-shadow: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1),
+                0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Эффект при наведении (вместо синего) */
-button:focus, button:active, button:hover {
-    background-color: alpha(@color1, 0.5); /* Твой акцентный цвет с прозрачностью */
-    border: 1px solid @color1;
-    color: white;
-    outline-style: none;
+/* 4. Эффект при наведении (Ховер) */
+button:hover {
+    background-color: alpha(@primary, 0.2);
+    border: 1px solid alpha(@primary, 0.4);
+    color: @primary;
 }
 
-/* Иконки (проверь пути, если иконки не появятся) */
+/* 5. Активная кнопка */
+button:focus, button:active {
+    background-color: @primary;
+    color: @on_primary;
+}
+
+/* 6. Пути к иконкам */
 #lock { background-image: image(url("/usr/share/wlogout/icons/lock.png")); }
 #logout { background-image: image(url("/usr/share/wlogout/icons/logout.png")); }
 #suspend { background-image: image(url("/usr/share/wlogout/icons/suspend.png")); }
