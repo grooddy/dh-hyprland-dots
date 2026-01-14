@@ -4,7 +4,7 @@
     "workbench.navigationControl.enabled": false,
     "window.commandCenter": false,
     "workbench.secondarySideBar.defaultVisibility": "hidden",
-    "workbench.activityBar.location": "top",
+    "workbench.activityBar.location": "bottom",
     "workbench.sideBar.location": "right",
     "workbench.layoutControl.enabled": false,
     "workbench.editor.tabActionLocation": "left",
@@ -14,19 +14,10 @@
     "workbench.statusBar.visible": false,
     "window.menuBarVisibility": "toggle",
     "window.titleBarStyle": "native",
-
-    // Убираем индикаторы изменений (синие/зеленые полоски у края) — делает вид чище
     "scm.diffDecorations": "gutter",
-    // Скрываем номера строк, если ты ориентируешься по памяти или используешь относительные
-    // "editor.lineNumbers": "off", 
-    // Убираем "хлебные крошки" (путь к файлу сверху), раз есть вкладки
-    "breadcrumbs.enabled": false,
-    // Убираем миникарту — в узких окнах она только мешает
-    "editor.minimap.enabled": false,
-    // Убираем иконки типов файлов в редакторе (опционально, для пущей чистоты)
+    "breadcrumbs.enabled": true,
+    "editor.minimap.enabled": true,
     "workbench.editor.showIcons": false,
-
-    "editor.fontFamily": "'JetBrainsMono Nerd Font', 'SF Pro Display', monospace",
     "editor.fontLigatures": true,
     "editor.fontSize": 14,
     "editor.lineHeight": 22, // Больше межстрочного интервала = легче читать
@@ -36,20 +27,12 @@
     "editor.smoothScrolling": true, // Плавный скролл
     "workbench.list.smoothScrolling": true,
     "terminal.integrated.smoothScrolling": true,
-
-    // Плавная анимация каретки (самый важный пункт)
     "editor.cursorSmoothCaretAnimation": "on", 
     "editor.cursorBlinking": "smooth",
-
-    // Плавный скролл везде
     "editor.smoothScrolling": true,
     "workbench.list.smoothScrolling": true,
     "terminal.integrated.smoothScrolling": true,
-
-    // Плавное появление предложений (IntelliSense)
     "editor.suggest.fadeStyle": true,
-    
-    // Плавная фокусировка (убирает резкие перескоки)
     "workbench.view.alwaysShowEditorActions": false,
     "workbench.colorTheme": "Visual Studio Dark",
     "window.titleBarStyle": "native",
@@ -61,6 +44,6 @@
     "git.enableSmartCommit": true,
     "git.confirmSync": false,
     "explorer.confirmDelete": false,
-    "window.customTitleBarVisibility": "never"
-
+    "window.customTitleBarVisibility": "never",
+    "workbench.editor.enablePreview": false
 }
