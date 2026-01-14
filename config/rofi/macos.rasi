@@ -1,5 +1,5 @@
 /**
- * ROFI Premium Glass Theme - Fixed Syntax
+ * ROFI Premium Glass Theme - Tahoe Sync
  */
 
 @import "~/.cache/matugen/colors-rofi.rasi"
@@ -16,8 +16,9 @@ configuration {
 }
 
 * {
+    /* Синхронизация цветов с SwayNC */
     background-color: transparent;
-    text-color: @fg;
+    text-color: #ffffff;
     margin: 0;
     padding: 0;
     spacing: 0;
@@ -25,16 +26,18 @@ configuration {
 
 window {
     width: 680px;
-    border-radius: 32px;
-    background-color: @bg; 
+    border-radius: 18px; /* Как в SwayNC .control-center */
     
-    /* Вместо rgba используем HEX с прозрачностью: #ffffff24 (примерно 14%) */
+    /* Цвет фона rgba(15, 15, 15, 0.5) в HEX формате — это #0f0f0f80 */
+    background-color: #0f0f0f80; 
+    
+    /* Тонкая рамка 1px solid rgba(255, 255, 255, 0.1) */
     border: 1px;
-    border-color: #ffffff24;
+    border-color: #ffffff1a; 
     
     location: center;
     anchor: center;
-    y-offset: -150px;
+    y-offset: -10%; /* Spotlight-стиль чуть выше центра */
 }
 
 mainbox {
@@ -42,63 +45,69 @@ mainbox {
 }
 
 inputbar {
-    padding: 35px 40px 25px 40px;
-    spacing: 18px;
+    /* Сочные отступы для заголовка */
+    padding: 30px 30px 20px 30px;
+    spacing: 15px;
     children: [ prompt, entry ];
 }
 
 prompt {
     text-color: @accent; 
-    font: "SF Pro Display 24";
+    font: "SF Pro Display 22";
     vertical-align: 0.5;
 }
 
 entry {
     placeholder: "Search applications...";
-    placeholder-color: #ffffff40; /* 25% прозрачности белого */
-    font: "SF Pro Display 24";
-    font-weight: 600;
+    placeholder-color: #ffffff4d; /* 30% прозрачности */
+    font: "SF Pro Display 22";
+    font-weight: 800; /* Жирный заголовок как в виджетах */
     vertical-align: 0.5;
-    text-color: @fg;
+    text-color: #ffffff;
 }
 
 listview {
     lines: 7;
     columns: 1;
     fixed-height: false;
-    padding: 10px 20px 25px 20px;
-    spacing: 6px;
+    padding: 5px 15px 15px 15px;
+    spacing: 4px;
     scrollbar: false;
+    
+    /* Разделительная линия как в SwayNC */
     border: 1px 0 0 0;
-    border-color: #ffffff14; /* 8% прозрачности */
+    border-color: #ffffff0d;
 }
 
 element {
-    padding: 12px 20px;
-    border-radius: 18px;
-    spacing: 16px;
+    padding: 10px 15px;
+    border-radius: 12px; /* Как у виджетов в SwayNC */
+    spacing: 15px;
+    background-color: transparent;
 }
 
 element-icon {
-    size: 48px;
+    size: 42px;
 }
 
 element-text {
     vertical-align: 0.5;
-    font: "SF Pro Display 16";
+    font: "SF Pro Display 15";
     font-weight: 600;
     text-color: inherit;
 }
 
-element selected.normal {
-    background-color: @accent;
-    text-color: @on-accent;
-    border: 1px;
-    border-color: #ffffff33; /* 20% прозрачности для блика */
+/* Эффект при наведении (как .widget-buttons-grid button:hover) */
+element hover {
+    background-color: #ffffff1f; /* rgba(255, 255, 255, 0.12) */
 }
 
-element normal.active,
-element alternate.active {
-    background-color: #ffffff0d; /* Едва заметный фон (5%) */
-    text-color: @accent;
+/* Активный элемент (как кнопка :checked) */
+element selected.normal {
+    background-color: #ffffff;
+    text-color: #000000;
+}
+
+element-text selected.normal {
+    text-color: #000000;
 }

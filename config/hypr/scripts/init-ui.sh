@@ -1,18 +1,22 @@
 #!/bin/bash
-# Путь: ~/.config/hypr/scripts/init-ui.sh
 
 # 1. Параметры
 WALL_DIR="$HOME/Pictures/Wallpapers"
-# Берем последние использованные обои или случайные, если кэш пуст
-[ -f "$HOME/.cache/swww/default" ] && WALLPAPER=$(cat "$HOME/.cache/swww/default") || WALLPAPER=$(find "$WALL_DIR" -type f | shuf -n 1)
+CACHE_WALL="$HOME/.cache/swww/default"
 
-# 2. Инициализация swww (демон для обоев)
-if ! pgrep -x "swww-daemon" > /dev/null; then
-    swww-daemon --format xrgb &
-    sleep 0.5
+if [ -f "$CACHE_WALL" ]; then
+    WALLPAPER=$(cat "$CACHE_WALL")
+else
+    WALLPAPER=$(find "$WALL_DIR" -type f | head -n 1)
 fi
 
-# 3. Установка обоев с премиальным переходом (эффект "раскрытия" из центра)
+# 2. Инициализация swww
+if ! pgrep -x "swww-daemon" > /dev/null; then
+    swww-daemon --format xrgb &
+    sleep 0.8 # Увеличим задержку для Niri
+fi
+
+# 3. Установка обоев
 swww img "$WALLPAPER" \
     --transition-type grow \
     --transition-pos 0.5,0.5 \
@@ -20,16 +24,20 @@ swww img "$WALLPAPER" \
     --transition-duration 1.5
 
 # 4. Генерация темы Matugen
-# Автоматически определяем темную/светлую тему из системы
 CURRENT_MODE=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")
 [[ "$CURRENT_MODE" == *"light"* ]] && MODE="light" || MODE="dark"
 
-echo "Applying Matugen with $MODE mode..."
 matugen image "$WALLPAPER" -m "$MODE"
 
-# 5. Синхронизация остальных компонентов
-# Вызываем colors-update.sh для обновления Waybar, SwayNC и т.д.
+# 5. Обновление компонентов (Waybar, SwayNC и т.д.)
 bash "$HOME/.config/hypr/scripts/colors-update.sh"
 
-# 6. Опционально: Обновление курсора (чтобы не баговал при старте)
-hyprctl setcursor WhiteSur 24
+# 6. Умная установка курсора
+# Проверяем, в какой мы сессии, чтобы не сыпать ошибками в лог
+if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
+    hyprctl setcursor WhiteSur 24
+elif [ "$XDG_CURRENT_DESKTOP" = "niri" ]; then
+    # Niri берет курсор из системных настроек gsettings или напрямую из конфига
+    gsettings set org.gnome.desktop.interface cursor-theme 'WhiteSur'
+    gsettings set org.gnome.desktop.interface cursor-size 24
+fi

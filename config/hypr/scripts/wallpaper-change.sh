@@ -2,16 +2,24 @@
 # Путь: ~/.config/hypr/scripts/wallpaper-change.sh
 
 WALL_DIR="$HOME/Pictures/Wallpapers"
-
+CACHE_PATH="$HOME/.cache/swww_current"
+# 1. Поиск обоев с проверкой
+# Добавили проверку существования директории
+if [ ! -d "$WALL_DIR" ]; then
+    notify-send "Error" "Wallpaper directory not found: $WALL_DIR"
+    exit 1
+fi
 # 1. Поиск случайных обоев (с поддержкой символических ссылок)
 WALLPAPER=$(find -L "$WALL_DIR" -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" -o -name "*.webp" \) | shuf -n 1)
-
+# Проверка: нашли ли мы файл?
+if [ -z "$WALLPAPER" ]; then
+    notify-send "Error" "No images found in $WALL_DIR"
+    exit 1
+fi
 # 2. Проверка, запущен ли демон swww (вместо hyprpaper)
 if ! pgrep -x "swww-daemon" > /dev/null; then
-    # Если не запущен, сохраняем путь и запускаем init-ui
-    echo "$WALLPAPER" > "$HOME/.cache/swww_current"
-    bash ~/.config/hypr/scripts/init-ui.sh
-    exit 0
+    swww-daemon --format argb & # Исправили xrgb на argb
+    sleep 0.5
 fi
 
 # 3. Плавная смена обоев через swww
@@ -34,4 +42,4 @@ matugen image "$WALLPAPER" -m "$MODE"
 bash ~/.config/hypr/scripts/colors-update.sh
 
 # 6. Сохраняем путь для следующей загрузки системы
-echo "$WALLPAPER" > "$HOME/.cache/swww_current"
+echo "$WALLPAPER" > "$CACHE_PATH"

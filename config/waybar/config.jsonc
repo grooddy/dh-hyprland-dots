@@ -1,29 +1,38 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 32,
-    "margin-top": 4,
-    "margin-left": 10,
-    "margin-right": 10,
-    "spacing": 4,
+    "height": 34,
+    "margin-top": 0,
+    "spacing": 0,
     
     "modules-left": [
         "custom/apple",
         "hyprland/window"
     ],
-    "modules-center": [], 
+    "modules-center": ["clock"], 
     "modules-right": [
-        "tray",
-        "custom/gpu",
-        "custom/power",
-        "pulseaudio",
-        "backlight",
-        "battery",
-        "hyprland/language",
-        "clock",
-        "custom/notification"
+        "tray", "group/control-center", "hyprland/language","custom/notification"
     ],
-
+    "group/control-center": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 600,
+            "children-class": "control-center-child",
+            "transition-left-to-right": false
+        },
+        "modules": [
+            "custom/arrow", 
+            "custom/gpu", 
+            "custom/power", 
+            "pulseaudio", 
+            "backlight", 
+            "battery"
+        ]
+    },
+    "custom/arrow": {
+        "format": "󰅖", // Красивая тонкая стрелка влево
+        "tooltip": false
+    },
     "custom/apple": {
         "format": "",
         "on-click": "rofi -show drun -theme macos",
@@ -114,5 +123,5 @@
         "format-en": "US",
         "format-uk": "UA",
         "format-ru": "RU"
-    },
+    }
 }

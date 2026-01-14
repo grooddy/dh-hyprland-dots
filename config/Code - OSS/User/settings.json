@@ -59,6 +59,8 @@
         "terminal.background": "#00000000"
     },
     "git.enableSmartCommit": true,
-    "git.confirmSync": false
+    "git.confirmSync": false,
+    "explorer.confirmDelete": false,
+    "window.customTitleBarVisibility": "never"
 
 }

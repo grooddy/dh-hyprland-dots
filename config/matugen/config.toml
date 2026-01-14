@@ -20,3 +20,11 @@ output_path = '~/.cache/matugen/eww-colors.scss'
 [templates.hyprland]
 input_path = '~/.config/matugen/templates/hyprland.conf'
 output_path = '~/.cache/matugen/colors-hyprland.conf'
+
+[templates.zen]
+input_path = '~/.config/matugen/templates/zen-colors.css'
+output_path = '~/.zen/kmknt1a6.Default (release)/chrome/zen-themes.css'
+
+[templates.niri]
+input_path = '~/.config/matugen/templates/niri.kdl'
+output_path = '~/.config/niri/colors.kdl'

@@ -1,118 +1,110 @@
-/* 1. Динамические цвета Matugen */
 @import "../../.cache/matugen/colors-waybar.css";
 
-/* 2. Глобальный сброс и шрифты */
 * {
-    border: none;
-    border-radius: 0;
-    font-family: "SF Pro Display", "SFProDisplay Nerd Font", sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    color: #ffffff; 
+    font-family: "SF Pro Display", "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    min-height: 0;
+    transition: background 0.3s ease;
 }
 
-/* 3. Основа — Полная прозрачность */
 window#waybar {
-    background: alpha(@surface, 0.6); /*E Более прозрачное базовое стекло */
-    border-radius: 12px;
-    /* Сильное закругление всего бара */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Тонкая светлая нить по краю */
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2); /* Мягкая тень для глубины */
+    /* Единая тонкая стеклянная полоса */
+    background: rgba(0, 0, 0, 0.15); 
+    /* Тонкая светлая линия сверху или снизу подчеркивает грань стекла */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* 4. Магия "Стеклянных Линз" (Виджеты) */
-#custom-apple, 
-#window, 
-#pulseaudio, 
-#backlight, 
-#battery, 
-#language, 
-#custom-gpu, 
-#custom-power, 
-#clock, 
+/* Модули как логические зоны, а не кнопки */
+#custom-apple,
+#window,
+#clock,
+#tray,
+#language,
 #custom-notification,
-#tray {
-    padding: 0 12px;
-    margin: 4px 2px;
-    color: @text;
-    background: transparent; /* Убираем индивидуальные фоны-кнопки */
-    border-radius: 12px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* 5. Эксклюзивные стили для модулей */
-
-/* Apple Logo - Левый акцент */
-#custom-apple {
-    font-size: 14px;
-    color: @primary;
-    padding-left: 12px;
-}
-
-/* Заголовок окна - Мягкий градиент */
-#window {
+#group-control-center {
     background: transparent;
-    border: none;
-    box-shadow: none;
-    color: alpha(@text, 0.6);
-    margin-left: 20px;
+    padding: 0 12px;
+    margin: 0;
 }
 
-/* Язык - Акцентная кнопка (как в iOS) */
-#language {
-    background: @primary;
-    color: @on_primary;
-    border: 1px solid alpha(@primary, 0.4);
-    min-width: 28px;
+/* Apple Logo */
+#custom-apple {
+    font-size: 16px;
+    padding-left: 16px;
 }
 
-/* Часы - Финальный правый виджет */
+/* Finder / Window */
+#window {
+    font-weight: 600;
+}
+
+/* Часы (Жирнее для акцента) */
 #clock {
-    /*background: alpha(@surface, 0.7);*/
-    padding-right: 12px;
+    font-weight: 700;
 }
 
-/* Трей - Иконки */
-#tray {
-    margin-right: 4px;
+/* Drawer (Контрольный центр) */
+#group-control-center {
+    /* Легкое выделение зоны контрольного центра */
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    margin: 4px 2px;
 }
 
-/* 6. Интерактивность (Hover эффекты) */
+#custom-arrow {
+    padding: 0 8px;
+    color: #ffffff;
+}
 
+/* Язык US/RU */
+#language {
+    font-weight: 800;
+    font-size: 11px;
+}
+
+/* Ховер - деликатное подсвечивание зоны */
 #custom-apple:hover, 
 #clock:hover, 
-#battery:hover, 
-#pulseaudio:hover, 
-#language:hover, 
+#group-control-center:hover,
 #custom-notification:hover {
-    background: alpha(@white, 0.1); /* Легкий блик при наведении */
+    background: rgba(255, 255, 255, 0.15);
     border-radius: 8px;
 }
 
-/* 7. Состояния системы */
-
-#battery.charging {
-    color: #34c759; /* macOS Green */
-    border-color: rgba(52, 199, 89, 0.3);
-}
-
-#battery.critical:not(.charging) {
-    background: #ff3b30;
-    color: #ffffff;
-    animation: pulse_red 1s infinite alternate;
-}
-
-@keyframes pulse_red {
-    from { box-shadow: 0 0 5px rgba(255, 59, 48, 0.4); }
-    to { box-shadow: 0 0 20px rgba(255, 59, 48, 0.8); }
-}
-
-/* 8. Анимация появления (если бар перезагружается) */
-@keyframes slidein {
-    from { opacity: 0; margin-top: -20px; }
-    to { opacity: 1; margin-top: 8px; }
+/* Анимация плавного появления из прозрачности */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 window#waybar {
-    animation: slidein 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* Отступы для всех модулей внутри группы control-center */
+#group-control-center > widget > * {
+    padding: 0 8px; /* Горизонтальные отступы между иконками */
+    margin: 0 2px;
+}
+
+/* Явно для каждого модуля внутри, чтобы они не слипались */
+#pulseaudio,
+#backlight,
+#battery,
+#custom-gpu,
+#custom-power {
+    padding: 0 8px;
+}
+
+/* Стилизация раскрытого Drawer */
+.control-center-child {
+    padding: 0 4px;
+}
+
+/* Опционально: чуть больше места для стрелочки-индикатора */
+#custom-arrow {
+    padding: 0 10px 0 5px;
 }

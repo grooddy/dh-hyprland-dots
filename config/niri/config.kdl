@@ -1,0 +1,179 @@
+// #######################################################################################
+// NIRI PREMIUM CONFIG - TAHOE GLASS EDITION (2026)
+// #######################################################################################
+
+// Инклюд динамических цветов Matugen
+include "colors.kdl"
+
+// ---------------------------------------------------------------------------------------
+// ENVIRONMENT & AUTOSTART
+// ---------------------------------------------------------------------------------------
+environment {
+    XCURSOR_SIZE "24"
+    HYPRCURSOR_SIZE "24"
+    GDK_BACKEND "wayland,x11"
+    QT_QPA_PLATFORM "wayland;xcb"
+    CLUTTER_BACKEND "wayland"
+    XDG_CURRENT_DESKTOP "niri"
+    XDG_SESSION_TYPE "wayland"
+    XDG_SESSION_DESKTOP "niri"
+    QT_QPA_PLATFORMTHEME "qt6ct"
+    MOZ_USE_XINPUT2 "1"
+}
+
+spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
+spawn-at-startup  "waybar"
+spawn-at-startup "swaync"
+spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
+spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
+// Инициализация UI (Matugen, обои)
+spawn-at-startup "bash" "-c" "sleep 1 && ~/.config/hypr/scripts/init-ui.sh"
+
+// ---------------------------------------------------------------------------------------
+// INPUT & DEVICES
+// ---------------------------------------------------------------------------------------
+input {
+    keyboard {
+        xkb {
+            layout "us,ua,ru"
+            options "grp:alt_shift_toggle"
+        }
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+        dwt // disable-while-typing
+        scroll-factor 0.4
+    }
+
+    mouse {
+        // Эквивалент sensitivity 0
+    }
+
+}
+// ---------------------------------------------------------------------------------------
+// LAYOUT & LOOK (TAHOE STYLE)
+// ---------------------------------------------------------------------------------------
+layout {
+    gaps 12
+    center-focused-column "never"
+
+    preset-column-widths {
+        proportion 0.33
+        proportion 0.5
+        proportion 0.66
+    }
+    
+    default-column-width { proportion 0.5; }
+
+    focus-ring {
+        width 2
+        // Цвета подтянутся из colors.kdl (Matugen)
+    }
+
+    // Аналог borders-plus-plus (доп. отступ внутри рамки)
+    border {
+        off
+        width 1
+    }
+}
+
+window-rule {
+    geometry-corner-radius 20
+    clip-to-geometry true
+}
+
+// Правила окон (Rules)
+window-rule {
+    // Вместо class используем app-id (для Alacritty и Zen)
+    match app-id="(?i)zen"
+    opacity 0.95
+}
+
+window-rule {
+    match app-id="alacritty"
+    opacity 0.9
+}
+
+window-rule {
+    match app-id="org.kde.polkit-kde-authentication-agent-1"
+    match title="Open File"
+    match title="Save As"
+    open-floating true
+}
+
+// ---------------------------------------------------------------------------------------
+// ANIMATIONS (FLUID & LEAN)
+// ---------------------------------------------------------------------------------------
+animations {
+    // Niri славится своими кривыми по умолчанию, но мы их чуть замедлим для "премиальности"
+    slowdown 1.1
+}
+
+// ---------------------------------------------------------------------------------------
+// KEYBINDINGS
+// ---------------------------------------------------------------------------------------
+binds {
+    // Системные
+    Mod+Return { spawn "alacritty"; }
+    Mod+E { spawn "nautilus"; }
+    Mod+R { spawn "rofi" "-show" "drun" "-theme" "macos"; }
+    Mod+Space { spawn "rofi" "-show" "drun" "-theme" "macos"; }
+    Mod+B { spawn "zen-browser"; }
+    Mod+L { spawn "hyprlock"; }
+    Mod+N { spawn "swaync-client" "-t" "-sw"; }
+    Mod+Shift+E { spawn "wlogout"; }
+    
+    Mod+Q { close-window; }
+    Mod+Shift+M { quit; }
+    Mod+Shift+R { spawn "niri" "msg" "action" "reload-config"; }
+
+    // Управление окнами
+    Mod+F { maximize-column; }
+    Mod+V { toggle-window-floating; }
+    Mod+C { center-column; }
+
+    // Навигация (Focus)
+    Mod+Left  { focus-column-left; }
+    Mod+Right { focus-column-right; }
+    Mod+Up    { focus-window-up; }
+    Mod+Down  { focus-window-down; }
+
+    // Перемещение окон
+    Mod+Shift+Left  { move-column-left; }
+    Mod+Shift+Right { move-column-right; }
+
+    // Воркспейсы (в Niri это ленты)
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    // ... повторить для остальных
+
+    // Мультимедиа
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "pamixer" "-i" "5"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "pamixer" "-d" "5"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "set" "5%+"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "set" "5%-"; }
+
+    // Скриншоты
+    Print { spawn "bash" "-c" "grim ~/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png"; }
+    Shift+Print { spawn "niri" "msg" "action" "screenshot"; } // Нативный крутой скриншотер Niri
+}
+
+// ---------------------------------------------------------------------------------------
+// OUTPUT & XWAYLAND
+// ---------------------------------------------------------------------------------------
+output "eDP-1" {
+    mode "1920x1080@144"
+    scale 1.0
+}

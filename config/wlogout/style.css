@@ -3,9 +3,10 @@
 
 /* 2. Общие настройки */
 * {
-    font-family: "SF Pro Display", "SFProDisplay Nerd Font", sans-serif;
+    font-family: "Inter Display", sans-serif;
+    font-weight: 500;
     background-image: none;
-    transition: all 0.2s ease-in-out; /* Плавный переход */
+    transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 window {
@@ -31,6 +32,7 @@ button:hover {
     background-color: alpha(@primary, 0.2);
     border: 1px solid alpha(@primary, 0.4);
     color: @primary;
+    
 }
 
 /* 5. Активная кнопка */

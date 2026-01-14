@@ -30,6 +30,11 @@ if command -v pywalfox &> /dev/null; then
     pywalfox update > /dev/null 2>&1
 fi
 
+# Если запущен Niri — обновляем его конфиг, чтобы подтянуть colors.kdl
+if pgrep -x "niri" > /dev/null; then
+    niri msg action reload-config
+fi
+
 # 5. Премиальное уведомление
 WALL_NAME=$(basename "$WALLPAPER")
 notify-send -a "System UI" \
