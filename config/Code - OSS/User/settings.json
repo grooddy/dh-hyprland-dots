@@ -45,5 +45,6 @@
     "git.confirmSync": false,
     "explorer.confirmDelete": false,
     "window.customTitleBarVisibility": "never",
-    "workbench.editor.enablePreview": false
+    "workbench.editor.enablePreview": false,
+    "explorer.confirmPasteNative": false
 }

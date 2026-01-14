@@ -1,0 +1,64 @@
+# #######################################################################################
+# DH-HYPRLAND-DOTS INSTALLER (Alpha Version 2026)
+# Target: Hyprland & Niri
+# #######################################################################################
+
+[info]
+name = "DH Shell"
+author = "grooddy"
+description = "Premium Material You dotfiles for Hyprland and Niri"
+version = "1.0.0"
+repository = "https://github.com/grooddy/dh-hyprland-dots"
+
+[dependencies]
+# Основные компоненты
+packages = [
+    "hyprland", "niri", "waybar", "swaync", "swww", "rofi-wayland", 
+    "alacritty", "nautilus", "matugen-bin", "grim", "slurp", "swappy",
+    "cliphist", "pamixer", "brightnessctl", "playerctl"
+]
+# Шрифты и курсоры
+fonts = ["ttf-jetbrains-mono-nerd", "otf-apple-fonts"]
+cursor = "whitesur-cursor-theme"
+
+[structure]
+# Маппинг папок из репозитория в систему
+~/.config/hypr = "hypr"
+~/.config/niri = "niri"
+~/.config/waybar = "waybar"
+~/.config/swaync = "swaync"
+~/.config/matugen = "matugen"
+~/.config/alacritty = "alacritty"
+~/.config/wlogout = "wlogout"
+~/Pictures/Wallpapers = "wallpapers"
+
+[scripts]
+# Скрипты, которые выполняются во время установки
+pre_install = """
+bash ./install.sh
+echo "Checking for Wayland environment..."
+# Создаем кэш папки, чтобы скрипты не выдавали ошибки
+mkdir -p ~/.cache/swww ~/.cache/matugen
+touch ~/.cache/swww_current
+"""
+
+post_install = """
+echo "Setting up permissions for scripts..."
+chmod +x ~/.config/hypr/scripts/*.sh
+
+echo "Initial theme generation..."
+# Запускаем генерацию цветов, чтобы система не была 'серой' при первом старте
+bash ~/.config/hypr/scripts/init-ui.sh
+
+echo "Installation complete. Please log in to Hyprland or Niri."
+"""
+
+[env]
+# Переменные окружения для инсталлера
+XDG_CURRENT_DESKTOP = "Hyprland"
+XDG_SESSION_TYPE = "wayland"
+
+[cleanup]
+# Файлы, которые нужно удалить перед обновлением
+backup = true
+target = ["~/.config/hypr", "~/.config/niri", "~/.config/waybar"]
