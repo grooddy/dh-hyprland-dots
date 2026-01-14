@@ -1,4 +1,4 @@
-# <img src="https://github.com/user-attachments/assets/75080517-5e01-443b-871d-15f5c9e4726d" width="35" height="35" style="vertical-align:middle;"> Hyprland DH Dotfiles
+# Hyprland DH Dotfiles
 
 ![Stars](https://img.shields.io/github/stars/grooddy/dh-hyprland-dots?style=for-the-badge&color=white)
 ![License](https://img.shields.io/github/license/grooddy/dh-hyprland-dots?style=for-the-badge&color=white)
