@@ -19,14 +19,13 @@
 ## 🛠 Компоненты системы
 
 | Компонент | Программа |
-| :--- | :--- |
+| :--- | :--- | 
 | **ОС** | [EndeavourOS](https://endeavouros.com/) (Arch-based) |
 | **Терминал** | [Alacritty](https://alacritty.org/) |
 | **Панель** | [Waybar](https://github.com/Alexays/Waybar) |
 | **Лаунчер** | [Rofi-wayland](https://github.com/lbonn/rofi-wayland) |
 | **Уведомления** | [SwayNC](https://github.com/ErikReider/SwayNotificationCenter) |
-| **Шрифт** | JetBrains Mono Nerd Font | SF Pro |
-| **Док** | [nwg-dock-hyprland](https://github.com/nwg-piotr/nwg-dock-hyprland) |
+| **Шрифт** | JetBrains Mono Nerd Font, SF Pro |
 
 ---
 
@@ -34,24 +33,26 @@
 
 ### 1. Склонируйте репозиторий
 
-git clone [https://github.com/grooddy/dh-hyprland-dots.git](https://github.com/grooddy/dh-hyprland-dots.git) ~/dotfiles
-cd ~/dotfiles'''
+    git clone [https://github.com/grooddy/dh-hyprland-dots.git](https://github.com/grooddy/dh-hyprland-dots.git) 
+    cd ~/dotfiles
 ### 2. Запустите инсталлятор
-chmod +x install.sh
-./install.sh
+    chmod +x install.sh
+    ./install.sh
 ⌨️ Горячие клавиши
+| Comand | Exec |
+| :--- | :--- | 
+| SUPER + SPACE |Поиск приложений (Rofi) |
+| SUPER + Enter | Терминал (Alacritty) |
+| SUPER + N | Центр уведомлений (SwayNC) |
+| SUPER + Q |Закрыть активное окно |
+| SUPER + L | Блокировка экрана (Hyprlock) |
+| PrintScreen | Скриншот области (Grim + Slurp) |
 
-    SUPER + SPACE — Поиск приложений (Rofi)
+---
 
-    SUPER + Enter — Терминал (Alacritty)
-
-    SUPER + N — Центр уведомлений (SwayNC)
-
-    SUPER + Q — Закрыть активное окно
-
-    SUPER + L — Блокировка экрана (Hyprlock)
-
-    PrintScreen — Скриншот области (Grim + Slurp)
 📦 Зависимости
-Для корректной работы установите следующие пакеты: hyprland alacritty waybar swaync rofi-wayland ttf-jetbrains-mono-nerd swappy grim slurp cliphist nwg-dock-hyprland
+
+Для корректной работы установите следующие пакеты: 
+
+hyprland alacritty waybar swaync rofi-wayland ttf-jetbrains-mono-nerd swappy grim slurp cliphist nwg-dock-hyprland
 <div align="center"> <p>Сделано с ❤️ для любителей чистого кода и красивых интерфейсов.</p> <a href="https://github.com/grooddy/dh-hyprland-dots/issues">Сообщить о баге</a> • <a href="https://github.com/grooddy/dh-hyprland-dots/pulls">Предложить улучшение</a> </div>
