@@ -3,48 +3,9 @@
     "chat.commandCenter.enabled": false,
     "workbench.navigationControl.enabled": false,
     "window.commandCenter": false,
-    "workbench.secondarySideBar.defaultVisibility": "hidden",
-    "workbench.activityBar.location": "bottom",
     "workbench.sideBar.location": "right",
-    "workbench.layoutControl.enabled": false,
-    "workbench.editor.tabActionLocation": "left",
-    "notebook.cellToolbarVisibility": "hover",
-    "notebook.globalToolbarShowLabel": "dynamic",
-    "debug.toolBarLocation": "docked",
+    "workbench.activityBar.location": "top",
     "workbench.statusBar.visible": false,
-    "window.menuBarVisibility": "toggle",
-    "window.titleBarStyle": "native",
-    "scm.diffDecorations": "gutter",
-    "breadcrumbs.enabled": true,
-    "editor.minimap.enabled": true,
-    "workbench.editor.showIcons": false,
-    "editor.fontLigatures": true,
-    "editor.fontSize": 14,
-    "editor.lineHeight": 22, // Больше межстрочного интервала = легче читать
-    "editor.letterSpacing": 0.5,
-    "editor.cursorBlinking": "smooth", // Плавное мигание курсора (очень премиально)
-    "editor.cursorSmoothCaretAnimation": "on", // Плавное движение курсора при печати
-    "editor.smoothScrolling": true, // Плавный скролл
-    "workbench.list.smoothScrolling": true,
-    "terminal.integrated.smoothScrolling": true,
-    "editor.cursorSmoothCaretAnimation": "on", 
-    "editor.cursorBlinking": "smooth",
-    "editor.smoothScrolling": true,
-    "workbench.list.smoothScrolling": true,
-    "terminal.integrated.smoothScrolling": true,
-    "editor.suggest.fadeStyle": true,
-    "workbench.view.alwaysShowEditorActions": false,
-    "workbench.colorTheme": "Visual Studio Dark",
-    "window.titleBarStyle": "native",
-    "workbench.colorCustomizations": {
-        "editor.background": "#00000000",
-        "sideBar.background": "#00000000",
-        "terminal.background": "#00000000"
-    },
-    "git.enableSmartCommit": true,
-    "git.confirmSync": false,
     "explorer.confirmDelete": false,
-    "window.customTitleBarVisibility": "never",
-    "workbench.editor.enablePreview": false,
-    "explorer.confirmPasteNative": false
+    
 }

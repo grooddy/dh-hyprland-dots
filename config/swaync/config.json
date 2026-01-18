@@ -3,12 +3,13 @@
   "positionX": "right",
   "positionY": "top",
   "layer": "overlay",
+  "transition-duration": 400,
   "cssPriority": "application",
-  "control-center-width": 340,
+  "control-center-width": 380,
   "control-center-height": 800,
-  "control-center-margin-top": 8,
-  "control-center-margin-bottom": 8,
+  "control-center-margin-top": 0,
   "control-center-margin-right": 10,
+
   "widgets": [
     "buttons-grid",
     "mpris",
@@ -28,8 +29,8 @@
     },
     "buttons-grid": {
       "actions": [
-        { "label": "󰖩", "command": "nm-connection-editor" },
-        { "label": "󰂯", "command": "blueman-manager" },
+        { "label": "󰖩", "command": "rofi-network-manager" },
+        { "label": "󰂯", "command": "rofi-bluetooth -theme macos" },
         { "label": "󰖔", "command": "sh -c /home/dh/.config/hypr/scripts/mode-switch.sh" },
         { "label": "󰕮", "command": "hyprpicker -a" },
         { "label": "󰢮", "command": "sh -c /home/dh/.config/hypr/scripts/gpu-switch.sh" },
@@ -40,7 +41,7 @@
       ]
     },
     "mpris": {
-      "image-size": 80,
+      "image-size": 100,
       "image-radius": 14
     },
     "notifications": {

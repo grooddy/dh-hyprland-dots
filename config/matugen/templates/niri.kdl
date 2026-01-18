@@ -1,7 +1,14 @@
-// Matugen colors for Niri
+// PREMIUM TAHOE ECLIPSE - 2026
 layout {
     focus-ring {
-        active-color "{{colors.primary.default.hex}}"
-        inactive-color "{{colors.surface_variant.default.hex}}aa"
+        // Увеличиваем ширину для мягкости
+        width 4
+
+        // Активное состояние: глубокий градиент с сильным затуханием
+        // Используем основной цвет и его очень темную версию для эффекта глубины
+        active-gradient from="{{colors.primary.default.hex}}" to="{{colors.primary.default.hex}}22" angle=45
+
+        // Неактивное состояние: практически невидимое, только намек на присутствие
+        inactive-color "{{colors.surface_variant.default.hex}}33"
     }
 }

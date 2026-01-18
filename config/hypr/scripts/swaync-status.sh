@@ -1,19 +1,6 @@
 #!/bin/bash
+GPU=$(cat /tmp/gpu_status.txt 2>/dev/null || supergfxctl -g)
+POWER=$(cat /tmp/power_status.txt 2>/dev/null || asusctl profile -p | grep 'Active profile' | awk '{print $NF}')
 
-CONFIG="$HOME/.config/swaync/config.json"
-
-while true; do
-    GPU=$(supergfxctl -g)
-    POWER=$(asusctl profile -p | grep 'Active profile' | awk '{print $NF}')
-    
-    # Меняем текст только в блоке label#gpu
-    sed -i "/\"label#gpu\"/!b;n;c\      \"text\": \"󰢮 GPU: $GPU\"," "$CONFIG"
-    
-    # Меняем текст только в блоке label#power
-    sed -i "/\"label#power\"/!b;n;c\      \"text\": \"󰈐 Power: $POWER\"," "$CONFIG"
-    
-    # Перезагружаем конфиг
-    swaync-client -R
-    
-    sleep 5
-done
+# Отправляем статичное уведомление, которое заменяет предыдущее (через ID 999)
+notify-send -r 999 -u low "Статус системы" "󰢮 $GPU  |  󰈐 $POWER"

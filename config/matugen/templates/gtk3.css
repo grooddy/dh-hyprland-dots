@@ -1,0 +1,42 @@
+/* Matugen Breeze Dynamic Template - Tahoe Glass Edition */
+
+/* Основные цвета фона с эффектом стекла */
+@define-color theme_bg_color_breeze alpha({{colors.surface.default.hex}}, 0.85);
+@define-color theme_base_color_breeze alpha({{colors.surface_container.default.hex}}, 0.9);
+@define-color theme_unfocused_bg_color_breeze alpha({{colors.surface.default.hex}}, 0.9);
+
+/* Текст */
+@define-color theme_fg_color_breeze {{colors.on_surface.default.hex}};
+@define-color theme_text_color_breeze {{colors.on_surface.default.hex}};
+@define-color theme_unfocused_fg_color_breeze {{colors.on_surface_variant.default.hex}};
+
+/* Акценты (Вместо синего #3daee9 теперь цвета обоев) */
+@define-color theme_selected_bg_color_breeze {{colors.primary.default.hex}};
+@define-color theme_selected_fg_color_breeze {{colors.on_primary.default.hex}};
+@define-color theme_hovering_selected_bg_color_breeze {{colors.primary_container.default.hex}};
+@define-color theme_view_active_decoration_color_breeze {{colors.primary.default.hex}};
+@define-color theme_view_hover_decoration_color_breeze {{colors.secondary.default.hex}};
+@define-color link_color_breeze {{colors.tertiary.default.hex}};
+
+/* Кнопки и Headerbar */
+@define-color theme_button_background_normal_breeze alpha({{colors.surface_container_high.default.hex}}, 0.6);
+@define-color theme_button_foreground_normal_breeze {{colors.on_surface.default.hex}};
+@define-color theme_header_background_breeze alpha({{colors.surface_container_low.default.hex}}, 0.7);
+@define-color theme_header_foreground_breeze {{colors.on_surface.default.hex}};
+@define-color theme_titlebar_background_breeze @theme_header_background_breeze;
+@define-color theme_titlebar_foreground_breeze @theme_header_foreground_breeze;
+
+/* Состояния */
+@define-color success_color_breeze {{colors.primary.default.hex}};
+@define-color error_color_breeze {{colors.error.default.hex}};
+@define-color warning_color_breeze {{colors.secondary.default.hex}};
+
+/* Границы */
+@define-color borders_breeze alpha({{colors.outline.default.hex}}, 0.3);
+@define-color unfocused_borders_breeze alpha({{colors.outline.default.hex}}, 0.2);
+
+/* Поддержка современных GTK4/Libadwaita приложений */
+@define-color accent_color @theme_selected_bg_color_breeze;
+@define-color accent_bg_color @theme_selected_bg_color_breeze;
+@define-color window_bg_color @theme_bg_color_breeze;
+@define-color window_fg_color @theme_fg_color_breeze;

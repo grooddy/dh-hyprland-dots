@@ -1,6 +1,14 @@
 [config]
 # Пустая секция config обязательна в новых версиях
 
+[templates.gtk4]
+input_path = '~/.config/matugen/templates/gtk4.css'
+output_path = '~/.config/gtk-4.0/gtk.css'
+
+[templates.gtk3]
+input_path = '~/.config/matugen/templates/gtk3.css'
+output_path = '~/.config/gtk-3.0/gtk.css'
+
 [templates.waybar]
 input_path = '~/.config/matugen/templates/colors-waybar.css'
 output_path = '~/.cache/matugen/colors-waybar.css'
@@ -25,6 +33,6 @@ output_path = '~/.cache/matugen/colors-hyprland.conf'
 input_path = '~/.config/matugen/templates/zen-colors.css'
 output_path = '~/.zen/kmknt1a6.Default (release)/chrome/zen-themes.css'
 
-[templates.niri]
-input_path = '~/.config/matugen/templates/niri.kdl'
-output_path = '~/.config/niri/colors.kdl'
+[templates.cosmic]
+input_path = '~/.config/matugen/templates/cosmic-theme.ron'
+output_path = '~/.config/cosmic/com.system76.CosmicTheme.User/v1/themes/Matugen-Crystal.ron'

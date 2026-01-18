@@ -1,15 +1,21 @@
-/* Rofi Matugen Colors - Premium Glass */
+/* Rofi Matugen Colors - Premium Glass Sync */
 * {
-    /* Основной акцент */
+    /* Основной акцент (как активные кнопки) */
     accent: {{colors.primary.default.hex}};
     on-accent: {{colors.on_primary.default.hex}};
     
-    /* Фон: используем контейнер для лучшего блюра + 75% прозрачности (bf) */
+    /* Мягкий акцент для выделенного элемента (как ховер в Waybar) */
+    accent-container: {{colors.primary_container.default.hex}};
+    on-accent-container: {{colors.on_primary_container.default.hex}};
+    
+    /* Фон: используем surface_container + прозрачность */
+    /* Если Matugen выводит 6 знаков, bf добавит 75% альфы */
     bg: {{colors.surface_container.default.hex}}bf;
     
     /* Текст */
     fg: {{colors.on_surface.default.hex}};
-    
-    /* Дополнительно: цвет для неактивных элементов */
     fg-alt: {{colors.on_surface_variant.default.hex}};
+    
+    /* Границы (как outline в Waybar) */
+    border-color: {{colors.outline_variant.default.hex}}4d; /* 30% прозрачности */
 }

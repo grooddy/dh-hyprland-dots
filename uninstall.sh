@@ -8,7 +8,7 @@ NC='\033[0m'
 
 CONFIG_DIR="$HOME/.config"
 # Стандартные папки
-CONFIGS=("hypr" "alacritty" "waybar" "swaync" "rofi" "eww" "matugen" "wlogout" "niri")
+CONFIGS=("hypr" "alacritty" "waybar" "swaync" "rofi" "eww" "matugen" "wlogout" "networkmanager-dmenu")
 WALL_TARGET="$HOME/Pictures/Wallpapers"
 
 echo -e "${RED}>>> Начало отмены установки симлинков...${NC}"

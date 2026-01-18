@@ -1,7 +1,0 @@
-// Matugen colors for Niri
-layout {
-    focus-ring {
-        active-color "#8f4b39"
-        inactive-color "#f5ddd8aa"
-    }
-}

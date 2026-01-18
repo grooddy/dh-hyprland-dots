@@ -7,13 +7,13 @@ touch "$LOCKFILE"
 trap "rm -f $LOCKFILE" EXIT
 
 # Переключаем профиль
-asusctl profile -n > /dev/null
+asusctl profile next > /dev/null
 
 # Даем контроллеру чуть больше времени (ASUS бывает медленным)
 sleep 0.2
 
 # Получаем данные за один проход, чтобы не дергать систему трижды
-RAW_INFO=$(asusctl profile -p | grep 'Active profile')
+RAW_INFO=$(asusctl profile get | grep 'Active profile')
 PROFILE=$(echo "$RAW_INFO" | awk '{print $NF}')
 
 # Отправляем уведомление
