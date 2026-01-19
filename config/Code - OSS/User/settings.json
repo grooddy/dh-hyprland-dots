@@ -5,7 +5,7 @@
     "window.commandCenter": false,
     "workbench.sideBar.location": "right",
     "workbench.activityBar.location": "top",
-    "workbench.statusBar.visible": false,
     "explorer.confirmDelete": false,
+    "workbench.secondarySideBar.defaultVisibility": "hidden",
     
 }

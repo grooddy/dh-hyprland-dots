@@ -1,11 +1,57 @@
 #!/bin/bash
-# Направляем ошибки в лог для отладки
-exec > /tmp/init-ui.log 2>&1
+# Путь: ~/.config/hypr/scripts/init-ui.sh
 
+LOG_FILE="/tmp/init-ui.log"
+exec > "$LOG_FILE" 2>&1
+
+log() { echo -e "[$(date +'%H:%M:%S')] $1"; }
+
+log "--- UI Startup Sequence Initiated ---"
+
+# 1. Ждем, пока Wayland реально станет доступен (важно для автостарта)
+MAX_RETRIES=50
+COUNT=0
+while [ -z "$WAYLAND_DISPLAY" ] && [ $COUNT -lt $MAX_RETRIES ]; do
+    sleep 0.1
+    ((COUNT++))
+done
+
+if [ -z "$WAYLAND_DISPLAY" ]; then
+    log "ERROR: WAYLAND_DISPLAY not found after waiting. Exiting."
+    exit 1
+fi
+
+log "Wayland display found: $WAYLAND_DISPLAY"
+
+# 2. Параметры и окружение
 CACHE_PATH="$HOME/.cache/swww_current"
 WALL_DIR="$HOME/Pictures/Wallpapers"
+UWSM_BIN=$(command -v uwsm)
 
-# 1. Проверка обоев
+# 3. Функция запуска (теперь с логированием ошибок запуска)
+run_app() {
+    local cmd=$1
+    if ! pgrep -x "$cmd" > /dev/null; then
+        log "Attempting to start $cmd..."
+        if [ -n "$UWSM_BIN" ]; then
+            uwsm app -- "$@" &
+        else
+            "${@}" &
+        fi
+        
+        # Проверяем, выжил ли процесс через секунду
+        sleep 1
+        if pgrep -x "$cmd" > /dev/null; then
+            log "SUCCESS: $cmd is running."
+        else
+            log "ERROR: $cmd failed to start. Check journalctl -xe"
+        fi
+    else
+        log "SKIP: $cmd is already running."
+    fi
+}
+
+# 4. Обои и Matugen (делаем ПЕРЕД Waybar, чтобы он сразу увидел стили)
 if [ -f "$CACHE_PATH" ] && [ -f "$(cat "$CACHE_PATH")" ]; then
     WALLPAPER=$(cat "$CACHE_PATH")
 else
@@ -13,30 +59,28 @@ else
     echo "$WALLPAPER" > "$CACHE_PATH"
 fi
 
-# 2. Запуск swww через uwsm (если мы в сессии uwsm)
+# Поднимаем swww-daemon
 if ! pgrep -x "swww-daemon" > /dev/null; then
-    uwsm app -- swww-daemon --format argb &
-    # Ждем до 5 секунд появления сокета
-    for i in {1..50}; do
-        if swww query &>/dev/null; then break; fi
-        sleep 0.1
-    done
+    swww-daemon --format argb &
+    for i in {1..30}; do swww query &>/dev/null && break || sleep 0.1; done
 fi
+swww img "$WALLPAPER" --transition-type none &
 
-# 3. Установка обоев
-swww img "$WALLPAPER" --transition-type none
-
-# 4. Matugen и темы
+# Генерация темы
 CURRENT_MODE=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")
 [[ "$CURRENT_MODE" == *"light"* ]] && MODE="light" || MODE="dark"
 
-matugen image "$WALLPAPER" -m "$MODE"
+log "Applying Matugen..."
+matugen image "$WALLPAPER" -m "$MODE" > /dev/null 2>&1
 sed -i '/transform:/d' "$HOME/.cache/matugen/colors.css" 2>/dev/null
 
-# 5. Обновление цветов
-bash ~/.config/hypr/scripts/colors-update.sh
+# 5. ЗАПУСК UI (Главный момент)
+# Сначала даем системе "продышаться"
+sleep 0.5 
+run_app waybar
+run_app swaync
 
-# Принудительный перезапуск swaync, если он не встал
-if ! pgrep -x "swaync" > /dev/null; then
-    uwsm app -- swaync &
-fi
+# 6. Финальное обновление сигналов
+bash "$HOME/.config/hypr/scripts/colors-update.sh" "$WALLPAPER"
+
+log "--- UI Startup Sequence Finished ---"

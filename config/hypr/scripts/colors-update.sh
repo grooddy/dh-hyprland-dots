@@ -1,44 +1,37 @@
 #!/bin/bash
 # Путь: ~/.config/hypr/scripts/colors-update.sh
 
-# 1. Определяем текущие обои и режим
-# Если используешь swww, вытягиваем текущий файл. Если нет — берем из кеша.
-WALLPAPER=$(swww query | awk -F 'image: ' '{print $2}')
-[ -z "$WALLPAPER" ] && WALLPAPER=$(cat "$HOME/.cache/swww/default") # Фолбэк
+# Получаем обои (из аргумента или кеша)
+WALLPAPER="${1:-$(cat "$HOME/.cache/swww_current")}"
 
+# Определяем режим
 CURRENT_MODE=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")
 [[ "$CURRENT_MODE" == *"light"* ]] && MODE="light" || MODE="dark"
 
-# 2. Запускаем Matugen
-# -m устанавливает режим (dark/light)
-# -c указывает путь к конфигу (если есть)
-matugen image "$WALLPAPER" -m "$MODE" > /dev/null 2>&1
+# 1. ГЕНЕРИРУЕМ ЦВЕТА (Matugen)
+# Это критически важный шаг, который ты пропускал
+if command -v matugen &> /dev/null; then
+    matugen image "$WALLPAPER" -m "$MODE" > /dev/null 2>&1
+    # Чистим артефакты (опционально)
+    sed -i '/transform:/d' "$HOME/.cache/matugen/colors.css" 2>/dev/null
+fi
 
-# 3. Даем долям секунды на запись файлов в ~/.cache/matugen/
-sleep 0.2
-
-# 4. Обновляем компоненты
-# Waybar (отправляем сигнал для перезагрузки CSS)
+# 2. ОБНОВЛЯЕМ КОМПОНЕНТЫ
+# Waybar
 pkill -SIGUSR2 waybar
 
-# SwayNC (перезагружаем стили)
+# SwayNC
 swaync-client -rs > /dev/null 2>&1
 
-# Firefox (если используешь Pywalfox, он может конфликтовать с Matugen напрямую, 
-# но если есть скрипт-прослойка, запускаем его здесь)
+# Firefox (в фоне с таймаутом)
 if command -v pywalfox &> /dev/null; then
-    pywalfox update > /dev/null 2>&1
+    timeout 2s pywalfox update > /dev/null 2>&1 &
 fi
 
-# Если запущен Niri — обновляем его конфиг, чтобы подтянуть colors.kdl
-if pgrep -x "niri" > /dev/null; then
-    niri msg action reload-config
-fi
-
-# 5. Премиальное уведомление
+# 3. УВЕДОМЛЕНИЕ
 WALL_NAME=$(basename "$WALLPAPER")
 notify-send -a "System UI" \
             -i "$WALLPAPER" \
             -t 3000 \
-            "Design Updated" \
-            "Theme: ${MODE^}\nPalette: Material You (Matugen)\nWallpaper: $WALL_NAME"
+            "Theme Switched" \
+            "Mode: ${MODE^}\nPalette: Material You\nWallpaper: $WALL_NAME"
