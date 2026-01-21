@@ -13,6 +13,7 @@
     border: 1px solid alpha(@outline, 0.1);
     margin: 8px;
     box-shadow: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .control-center-list {
@@ -43,6 +44,7 @@
 .widget-buttons-grid button:hover {
     background: alpha(@primary, 0.15);
     color: @primary;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .widget-buttons-grid button:checked {

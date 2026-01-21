@@ -33,6 +33,6 @@ output_path = '~/.cache/matugen/colors-hyprland.conf'
 input_path = '~/.config/matugen/templates/zen-colors.css'
 output_path = '~/.zen/kmknt1a6.Default (release)/chrome/zen-themes.css'
 
-[templates.cosmic]
-input_path = '~/.config/matugen/templates/cosmic-theme.ron'
-output_path = '~/.config/cosmic/com.system76.CosmicTheme.User/v1/themes/Matugen-Crystal.ron'
+[templates.kvantum]
+input_path = '~/.config/matugen/templates/matugen.kvconfig'
+output_path = '~/.local/share/Kvantum/MatugenTheme/MatugenTheme.kvconfig'

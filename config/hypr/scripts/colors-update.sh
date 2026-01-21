@@ -27,6 +27,7 @@ swaync-client -rs > /dev/null 2>&1
 if command -v pywalfox &> /dev/null; then
     timeout 2s pywalfox update > /dev/null 2>&1 &
 fi
+hyprctl reload
 
 # 3. УВЕДОМЛЕНИЕ
 WALL_NAME=$(basename "$WALLPAPER")
