@@ -5,10 +5,10 @@
   "layer": "overlay",
   "transition-duration": 400,
   "cssPriority": "application",
-  "control-center-width": 380,
-  "control-center-height": 800,
+  "control-center-width": 360,
+  "control-center-height": 820,
   "control-center-margin-top": 0,
-  "control-center-margin-right": 10,
+  "control-center-margin-right": 0,
 
   "widgets": [
     "buttons-grid",

@@ -3,9 +3,30 @@
     "chat.commandCenter.enabled": false,
     "workbench.navigationControl.enabled": false,
     "window.commandCenter": false,
-    "workbench.sideBar.location": "right",
     "workbench.activityBar.location": "top",
     "explorer.confirmDelete": false,
     "workbench.secondarySideBar.defaultVisibility": "hidden",
+    "redhat.telemetry.enabled": false,
+    "yaml.schemas": {
+        "file:///home/dh/.vscode-oss/extensions/continue.continue-1.2.14-linux-x64/config-yaml-schema.json": [
+            ".continue/**/*.yaml"
+        ]
+    },
+    "twinny.locale": "ru",
+    "twinny.fileContextEnabled": true,
+    "twinny.ollamaHostname": "localhost",
+    "kilo-code.allowedCommands": [
+        "git log",
+        "git diff",
+        "git show"
+    ],
+    "kilo-code.deniedCommands": [],
+    "roo-cline.debug": false,
+    "roo-cline.allowedCommands": [
+        "git log",
+        "git diff",
+        "git show"
+    ],
+    "roo-cline.deniedCommands": [],
     
 }

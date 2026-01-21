@@ -2,72 +2,62 @@
 
 * {
     margin: 0;
-    color: @text;
-    font-family: "SF Pro Display", "Inter Tight", sans-serif;
+    padding: 0;
+    border: none;
+    font-family: "SF Pro Display", "Inter", sans-serif;
     font-size: 13px;
     font-weight: 500;
-    -webkit-font-smoothing: antialiased;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 window#waybar {
-    background: transparent;
+    background: alpha(@surface, 0.6); 
+    border-bottom: 1px solid alpha(@outline, 0.1);
+    color: @text;
 }
 
-/* --- Островки (Etched Crystal Style) --- */
-.modules-left, .modules-center, .modules-right {
-    
-    background: alpha(@surface_container, 0.65); 
-    border-radius: 20px;
-    /* Увеличил горизонтальный padding для баланса */
-    padding: 2px 10px; 
-    
-    /* Двойная тонкая граница: светлая сверху, темная снизу */
-    border: 1px solid alpha(@outline, 0.15); 
-    
-    /* Внутренние эффекты вместо внешних теней */
-    box-shadow: inset 0 1px 1px alpha(#ffffff, 0.15), /* Блик на фаске */
-                inset 0 -1px 1px alpha(@primary, 0.05); /* Легкий оттенок снизу */
+.modules-left, .modules-right {
+    padding: 0 15px;
 }
 
-.modules-center {
-    background: alpha(@primary_container, 0.35);
-    border: 1px solid alpha(@primary, 0.25);
-    box-shadow: inset 0 0 15px alpha(@primary, 0.1);
+#custom-apple, #clock, #tray, #language, #custom-ai_status, 
+#custom-notification, #pulseaudio, #battery, #backlight, #window {
+    padding: 0 12px;
+    margin: 4px 2px;
+    border-radius: 12px;
+    transition: background 0.4s ease, color 0.4s ease;
+    color: alpha(@text, 0.8);
 }
 
-/* --- Модули --- */
-#custom-apple, #window, #clock, #tray, #language,
-#pulseaudio, #backlight, #battery, #custom-notification,
-#custom-gpu, #custom-power, #custom-arrow {
-    padding: 0 10px;
-    /* Уменьшил margin, чтобы ховер был внутри островка с запасом */
-    margin: 3px 2px; 
-    border-radius: 10px;
+#custom-apple:hover, #clock:hover, #pulseaudio:hover, 
+#battery:hover, #language:hover, #custom-ai_status:hover,
+#custom-notification:hover {
+    background: alpha(@primary_container, 0.4);
+    color: @primary;
 }
 
-/* Унификация цвета часов */
+#custom-apple {
+    font-size: 17px;
+    color: @text;
+}
+
 #clock {
     font-weight: 700;
-    color: @text; /* На светлом стекле обычный текст читается лучше */
+    font-size: 13.5px;
+    color: @on_surface;
 }
 
-/* Трей (делаем чуть прозрачнее, чтобы не выбивался) */
-#tray {
-    background: alpha(@surface_bright, 0.1);
-    border-radius: 12px;
-    margin: 3px 6px;
+#window {
+    color: alpha(@text, 0.4);
+    font-size: 11px;
 }
 
-/* --- Премиальный Hover --- */
-#custom-apple:hover, #pulseaudio:hover, #battery:hover, #clock:hover, #language:hover {
-    color: @primary;
-    background: alpha(@primary, 0.12);
-    /* Эффект свечения иконки */
-    text-shadow: 0 0 8px alpha(@primary, 0.5);
-}
+#custom-ai_status.running { color: @primary; }
+#custom-ai_status.stopped { color: @error; }
 
-/* Статусы (чистые цвета из Matugen) */
 #battery.charging { color: @primary; }
-#battery.warning { color: #ff9500; }
+#battery.warning { color: @tertiary; }
 #battery.critical { color: @error; }
+
+#tray {
+    margin-left: 10px;
+}

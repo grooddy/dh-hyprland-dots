@@ -1,21 +1,21 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 32,
-    "margin-top": 12,
-    "margin-right": 12,
-    "margin-left": 12,
+    "height": 30,
+    "margin-top": 0,
+    "margin-right": 0,
+    "margin-left": 0,
     "spacing": 0,
-    
+    "fixed-center": true,
     "modules-left": [
         "custom/apple",
-        // Перечисляем все три, Waybar отобразит только активный
         "hyprland/window"
     ],
     "modules-center": ["clock"], 
     "modules-right": [
         "tray", 
         "group/control-center", 
+        "custom/ai_status",
         "hyprland/language",
         "custom/notification"
     ],
@@ -59,7 +59,8 @@
         "format": "{}",
         "format-en": "US",
         "format-uk": "UA",
-        "format-ru": "RU"
+        "format-ru": "RU",
+        "color": "@text-alt"
     },
     // --- Остальные модули (без изменений) ---
     "custom/arrow": { "format": "󰅂", "tooltip": false },
@@ -120,5 +121,14 @@
     "backlight": {
         "format": "󰖨   {percent}%", // Солнце в стиле Lucide
         "tooltip": false
-    }
+    },
+    "custom/ai_status": {
+    "format": "{}",
+    "return-type": "json",
+    "exec": "~/.config/hypr/scripts/ai-status.sh",
+    "interval": 5,
+    "on-click": "~/.config/hypr/scripts/ai-status.sh --toggle-ollama",
+    "on-click-right": "~/.config/hypr/scripts/ai-status.sh --toggle-docker",
+    "tooltip": true
+}
 }

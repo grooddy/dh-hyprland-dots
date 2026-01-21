@@ -1,0 +1,8 @@
+{
+    "yaml.schemas": {
+        "file:///home/dh/.vscode-oss/extensions/continue.continue-1.2.14-linux-x64/config-yaml-schema.json": [
+            ".continue/**/*.yaml",
+            "file:///home/dh/.continue/config.yaml"
+        ]
+    }
+}
