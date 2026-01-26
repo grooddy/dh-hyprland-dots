@@ -1,36 +1,37 @@
-{
-    "label" : "lock",
-    "action" : "loginctl lock-session",
-    "text" : "Lock",
-    "keybind" : "l"
-}
-{
-    "label" : "hibernate",
-    "action" : "systemctl hibernate",
-    "text" : "Hibernate",
-    "keybind" : "h"
-}
-{
-    "label" : "logout",
-    "action" : "bash -c '[[ \"$XDG_CURRENT_DESKTOP\" == \"niri\" ]] && niri msg action quit || hyprctl dispatch exit'",
-    "text" : "Logout",
-    "keybind" : "e"
-}
-{
-    "label" : "shutdown",
-    "action" : "systemctl poweroff",
-    "text" : "Shutdown",
-    "keybind" : "s"
-}
-{
-    "label" : "suspend",
-    "action" : "systemctl suspend",
-    "text" : "Suspend",
-    "keybind" : "u"
-}
-{
-    "label" : "reboot",
-    "action" : "systemctl reboot",
-    "text" : "Reboot",
-    "keybind" : "r"
-}
+
+    {
+        "label" : "lock",
+        "action" : "hyprlock || loginctl lock-session",
+        "text" : "Блокировка",
+        "keybind" : "l"
+    },
+    {
+        "label" : "logout",
+        "action" : "bash -c '[[ \"$XDG_CURRENT_DESKTOP\" == \"niri\" ]] && niri msg action quit || hyprctl dispatch exit'",
+        "text" : "Выход",
+        "keybind" : "e"
+    },
+    {
+        "label" : "suspend",
+        "action" : "systemctl suspend",
+        "text" : "Сон",
+        "keybind" : "u"
+    },
+    {
+        "label" : "hibernate",
+        "action" : "systemctl hibernate",
+        "text" : "Гибернация",
+        "keybind" : "h"
+    },
+    {
+        "label" : "reboot",
+        "action" : "systemctl reboot",
+        "text" : "Перезагрузка",
+        "keybind" : "r"
+    },
+    {
+        "label" : "shutdown",
+        "action" : "systemctl poweroff",
+        "text" : "Выключить",
+        "keybind" : "s"
+    }

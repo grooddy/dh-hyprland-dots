@@ -37,7 +37,7 @@
         },
         {
           "label": "󰈐",
-          "command": "sh -c /home/dh/.config/hypr/scripts/asus-power.sh"
+          "command": "sh -c '/home/dh/.config/hypr/scripts/asus-power.sh --toggle'"
         },
         {
           "label": "󰸉",

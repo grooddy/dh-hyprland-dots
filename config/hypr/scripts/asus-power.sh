@@ -1,29 +1,43 @@
 #!/usr/bin/env bash
 
-# Иконки (можешь заменить на свои)
+# Константы (иконки)
 ICON_PERF="󰓅"
 ICON_BAL="󰾆"
 ICON_QUIET="󰊠"
 
-# 1. Логика переключения (для SwayNC и клика по Waybar)
+# Функция получения данных от системы
+get_active_profile() {
+    # asusctl выдает строку "Active profile: Quiet", забираем последнее слово
+    asusctl profile get | grep 'Active profile' | awk '{print $NF}'
+}
+
+# --- ЛОГИКА ПЕРЕКЛЮЧЕНИЯ (для SwayNC и клика по бару) ---
 if [[ "$1" == "--toggle" ]]; then
-    # Переключаем профиль через asusctl (без sudo!)
+    # Переключаем на следующий профиль (Quiet -> Balanced -> Performance)
     asusctl profile next > /dev/null
 
-    # Получаем имя нового профиля для уведомления
-    NEW=$(asusctl profile get | grep "Active profile" | awk '{print $3}')
+    # Получаем новое состояние
+    CURRENT=$(get_active_profile)
 
-    notify-send -a "Asus System" -t 1500 "Power Profile" "Switched to $NEW"
+    # Локализация для уведомлений
+    case "$CURRENT" in
+        Performance) MSG="Максимальная мощность" ;;
+        Quiet)       MSG="Тихий режим" ;;
+        Balanced)    MSG="Сбалансированный" ;;
+        *)           MSG="$CURRENT" ;;
+    esac
 
-    # --- МАГИЯ ОБНОВЛЕНИЯ WAYBAR ---
+    # Отправляем уведомление
+    notify-send -a "Asus System" -u low -t 1500 "Профиль питания" "Установлен: $MSG"
+
+    # МАГИЯ: посылаем сигнал Waybar обновить именно этот модуль (SIGRTMIN+8)
     pkill -RTMIN+8 waybar
     exit 0
 fi
 
-# 2. Логика вывода JSON (для Waybar exec)
-CURRENT=$(asusctl profile get | grep "Active profile" | awk '{print $3}')
+# --- ЛОГИКА ВЫВОДА ДЛЯ WAYBAR (JSON) ---
+CURRENT=$(get_active_profile)
 
-# 3. Определяем текст и иконку
 case "$CURRENT" in
     Performance)
         ICON="$ICON_PERF"
@@ -46,4 +60,6 @@ case "$CURRENT" in
         CLASS="unknown"
         ;;
 esac
-echo "{\"text\": \"$ICON $TEXT\", \"tooltip\": \"Profile: $CURRENT\", \"class\": \"$CLASS\"}"
+
+# Выводим JSON, который Waybar распарсит автоматически
+echo "{\"text\": \"$ICON $TEXT\", \"tooltip\": \"Системный профиль: $CURRENT\", \"class\": \"$CLASS\"}"

@@ -114,11 +114,15 @@
     "spacing": 8,
   },
   "custom/power": {
-    "exec": "cat /tmp/power_status.txt 2>/dev/null || asusctl profile get | grep 'Active profile' | awk '{print $NF}'",
-    "interval": "once",
-    "signal": 2,
-    "format": "󰓅  {}",
-    "tooltip": false,
+    "format": "{}",
+    "exec": "/home/dh/.config/hypr/scripts/asus-power.sh",
+    "return-type": "json",
+    "on-click": "/home/dh/.config/hypr/scripts/asus-power.sh --toggle",
+    "on-click-right": "swaync-client -t -sw", // Правый клик открывает центр уведомлений
+    "interval": "once", // Модуль не опрашивает систему постоянно
+    "signal": 8, // Слушает SIGRTMIN+8 (обновляется по команде pkill)
+    "tooltip": true,
+    "escape": true,
   },
   "custom/gpu": {
     "exec": "cat /tmp/gpu_status.txt 2>/dev/null || supergfxctl -g",

@@ -117,3 +117,28 @@ window#waybar {
 #tray > .needs-attention {
     color: @error;
 }
+
+#custom-power {
+    background-color: alpha(@surface0, 0.7);
+    padding: 0 12px;
+    margin: 4px 0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+/* Красный акцент для максимальной мощности */
+#custom-power.perf {
+    color: #f38ba8;
+    border-bottom: 2px solid #f38ba8;
+}
+
+/* Зеленый акцент для тихого режима */
+#custom-power.quiet {
+    color: #a6e3a1;
+    border-bottom: 2px solid #a6e3a1;
+}
+
+/* Синий или нейтральный для баланса */
+#custom-power.balanced {
+    color: #89b4fa;
+}

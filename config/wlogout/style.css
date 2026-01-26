@@ -1,51 +1,82 @@
-/* 1. Динамические цвета Matugen */
+/* 1. Импорт цветов */
 @import "../../.cache/matugen/colors-waybar.css";
 
-/* 2. Общие настройки */
+/* 2. Настройки окна с размытием (Blur) */
+window {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
 * {
     font-family: "SF Pro Display", "Inter", sans-serif;
-    font-weight: 500;
-    font-size: 15px;
-    background-image: none;
-    transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-window {
-    background-color: rgba(0, 0, 0, 0.2);
+/* 3. Контейнер */
+grid {
+    margin: 100px;
 }
 
-/* 3. Кнопки */
+/* 4. Кнопки (избавляемся от каши) */
 button {
     color: @text;
-    background-color: alpha(@surface, 0.4); 
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 24px;
-    margin: 20px; /* Базовый отступ */
+    background-color: alpha(@surface, 0.3);
+    outline-style: none;
+    border: 1px solid alpha(@text, 0.1);
+    border-radius: 40px; /* Более мягкие углы */
+    margin: 20px;
+
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: 25%;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1),
-                0 10px 30px rgba(0, 0, 0, 0.2);
+    background-position: center 35%; /* Сдвигаем иконку чуть выше центра */
+    background-size: 80px; /* Фиксированный размер иконки */
+
+    /* Текст внутри кнопки */
+    text-shadow: none;
+    box-shadow: none;
 }
 
-/* 4. Эффект при наведении (Ховер) */
+/* Центрируем текст и опускаем его под иконку */
+button label {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 110px; /* Проталкиваем текст ниже иконки */
+}
+
+/* 5. Эффекты наведения */
 button:hover {
     background-color: alpha(@primary, 0.2);
-    border: 1px solid alpha(@primary, 0.4);
+    border: 1px solid @primary;
     color: @primary;
-    
 }
 
-/* 5. Активная кнопка */
-button:focus, button:active {
+button:focus,
+button:active {
     background-color: @primary;
     color: @on_primary;
 }
 
-/* 6. Пути к иконкам */
-#lock { background-image: image(url("/usr/share/wlogout/icons/lock.png")); }
-#logout { background-image: image(url("/usr/share/wlogout/icons/logout.png")); }
-#suspend { background-image: image(url("/usr/share/wlogout/icons/suspend.png")); }
-#hibernate { background-image: image(url("/usr/share/wlogout/icons/hibernate.png")); }
-#shutdown { background-image: image(url("/usr/share/wlogout/icons/shutdown.png")); }
-#reboot { background-image: image(url("/usr/share/wlogout/icons/reboot.png")); }
+/* 6. Иконки (проверь, что они лежат в папке icons) */
+#lock {
+    background-image: image(url("icons/lock.png"));
+}
+#logout {
+    background-image: image(url("icons/logout.png"));
+}
+#suspend {
+    background-image: image(url("icons/suspend.png"));
+}
+#hibernate {
+    background-image: image(url("icons/hibernate.png"));
+}
+#shutdown {
+    background-image: image(url("icons/shutdown.png"));
+}
+#reboot {
+    background-image: image(url("icons/reboot.png"));
+}
+
+/* Акцент для гибернации */
+#hibernate:hover {
+    background-color: alpha(@secondary, 0.2);
+    border: 1px solid @secondary;
+    color: @secondary;
+}
