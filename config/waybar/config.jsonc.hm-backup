@@ -1,0 +1,132 @@
+{
+  "layer": "top",
+  "position": "top",
+  "mode": "dock",
+  "height": 140,
+  "margin-top": -10,
+  "margin-left": 10,
+  "margin-right": 10,
+  "margin-bottom": -105,
+  "spacing": 0,
+
+  "modules-left": ["custom/apple", "hyprland/workspaces", "hyprland/window"],
+  "modules-center": ["clock"],
+  "modules-right": ["group/hardware", "group/controls", "group/system"],
+
+  "custom/apple": {
+    "format": "  ",
+    "on-click": "rofi -show drun -theme macos",
+    "tooltip": false,
+  },
+
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "on-click": "activate",
+    "format-icons": {
+      "active": "",
+      "default": "",
+    },
+    "persistent-workspaces": {
+      "*": 5,
+    },
+  },
+
+  "hyprland/window": {
+    "format": "  Processing: {}",
+    "max-length": 40,
+    "separate-outputs": true,
+    "rewrite": {
+      "": "Desktop",
+      "(.*) — Mozilla Firefox": "Firefox",
+      "(.*) — Zen Browser": "Zen",
+      "(.*) — Visual Studio Code": "VS Code",
+      "(.*) — Alacritty": "Terminal",
+    },
+  },
+
+  "clock": {
+    "format": "{:%H:%M}",
+    "format-alt": "{:%A, %d %B}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "year",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "days": "<span color='#ecc6d9'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>",
+      },
+    },
+  },
+
+  "group/hardware": {
+    "orientation": "horizontal",
+    "modules": ["custom/gpu", "custom/power"],
+  },
+
+  "group/controls": {
+    "orientation": "horizontal",
+    "modules": ["hyprland/language", "pulseaudio", "backlight"],
+  },
+
+  "group/system": {
+    "orientation": "horizontal",
+    "modules": ["tray", "battery", "custom/notification"],
+  },
+
+  "hyprland/language": {
+    "format": "{}",
+    "format-en": "EN",
+    "format-uk": "UA",
+    "format-ru": "RU",
+  },
+
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-muted": "󰝟",
+    "format-icons": { "default": ["󰕿", "󰖀", "󰕾"] },
+    "on-click": "pamixer -t",
+  },
+
+  "backlight": {
+    "format": "{icon}",
+    "format-icons": ["󰃞", "󰃟", "󰃠"],
+  },
+
+  "battery": {
+    "states": { "warning": 30, "critical": 15 },
+    "format": "{capacity}% {icon}",
+    "format-charging": "{capacity}% 󱐋",
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂁", "󰂂", "󰁹"],
+  },
+
+  "custom/notification": {
+    "format": "  ",
+    "on-click": "swaync-client -t -sw",
+  },
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 8,
+  },
+  "custom/power": {
+    "format": "{}", // Скрипт сам пришлет и иконку, и текст
+    "exec": "/home/dh/.config/hypr/scripts/asus-power.sh",
+    "return-type": "json",
+    "on-click": "/home/dh/.config/hypr/scripts/asus-power.sh --toggle",
+    "signal": 8,
+    "interval": "once",
+    "tooltip": true,
+  },
+  "custom/gpu": {
+    "exec": "cat /tmp/gpu_status.txt 2>/dev/null || supergfxctl -g",
+    "interval": "once",
+    "signal": 2,
+    "format": "󰢮  {}",
+    "tooltip": false,
+  },
+}

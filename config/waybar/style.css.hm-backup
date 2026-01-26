@@ -1,0 +1,133 @@
+@import "../../.cache/matugen/colors-waybar.css";
+
+/* --- ГЛОБАЛЬНЫЕ НАСТРОЙКИ --- */
+* {
+    /* SF Pro — это база премиальности. Если нет, Inter — лучший заменитель */
+    font-family: "SF Pro Display", "SF Pro Rounded", "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    color: @text;
+}
+
+window#waybar {
+    background-color: transparent;
+}
+
+/* --- СТИЛИ ОСТРОВОВ (DYNAMNIC ISLANDS) --- */
+.modules-left,
+.modules-center,
+.modules-right {
+    /* Эффект матового стекла: очень низкая альфа, чтобы Hyprland сделал остальное */
+    background: alpha(@surface, 0.25);
+
+    /* Rim Lighting: создаем эффект блика на верхней грани стекла */
+    border: 1px solid alpha(@outline, 0.08);
+    border-top: 1px solid alpha(@surface_bright, 0.45);
+
+    /* Tahoe стиль: мягкий прямоугольник (Squircle) вместо банальной капсулы */
+    border-radius: 20px;
+
+    padding: 2px 12px;
+    margin: 20px 0 100px 0;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Эффект при наведении — стекло "наполняется" светом */
+.modules-left:hover,
+.modules-center:hover,
+.modules-right:hover {
+    background: alpha(@surface, 0.45);
+    border: 1px solid alpha(@outline, 0.2);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
+}
+
+/* --- МОДУЛИ: ДЕТАЛИЗАЦИЯ --- */
+
+/* 1. APPLE LOGO (Системное меню) */
+#custom-apple {
+    font-size: 18px;
+    color: @text;
+    padding: 0 12px 0 4px;
+    opacity: 0.9;
+}
+
+/* 2. WORKSPACES (Минималистичные индикаторы) */
+#workspaces button {
+    color: alpha(@text, 0.3);
+    padding: 0 8px;
+    margin: 4px 2px;
+}
+
+#workspaces button.active {
+    color: @text;
+    background: alpha(@text, 0.1);
+    border-radius: 12px;
+    min-width: 25px; /* Активный элемент чуть "расширяется" */
+}
+
+#workspaces button:hover {
+    color: @text;
+    background: alpha(@text, 0.05);
+    border-radius: 12px;
+}
+
+/* 3. CLOCK (Центральный акцент) */
+#clock {
+    font-family: "SF Pro Rounded";
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: -0.4px;
+    color: @text;
+    padding: 0 10px;
+}
+
+/* 4. ГРУППЫ И МОДУЛИ СПРАВА */
+#group-hardware,
+#group-controls,
+#group-system {
+    border-radius: 14px;
+}
+
+#pulseaudio,
+#backlight,
+#battery,
+#language,
+#tray,
+#custom-notification {
+    padding: 0 8px;
+    margin: 0 2px;
+}
+
+/* Аккуратный индикатор батареи */
+#battery.charging {
+    color: #2ecc71;
+}
+#battery.warning {
+    color: #f1c40f;
+}
+#battery.critical {
+    color: #e74c3c;
+}
+
+/* Трей: делаем иконки более элегантными */
+#tray > .passive {
+    opacity: 0.6;
+}
+#tray > .needs-attention {
+    color: @error;
+}
+#custom-power {
+}
+
+#custom-power.perf {
+    color: #f38ba8; /* Красный для Performance */
+}
+
+#custom-power.balanced {
+    color: #89b4fa; /* Синий для Balanced */
+}
+
+#custom-power.quiet {
+    color: #a6e3a1; /* Зеленый для Quiet */
+}
