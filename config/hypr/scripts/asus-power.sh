@@ -1,23 +1,58 @@
-# Защита от спама кнопкой
-LOCKFILE="/tmp/asus_power.lock"
-[ -f "$LOCKFILE" ] && exit 0
-touch "$LOCKFILE"
-trap "rm -f $LOCKFILE" EXIT
+#!/usr/bin/env bash
 
-# Получаем данные за один проход, чтобы не дергать систему трижды
-RAW_INFO=$(asusctl profile get | grep 'Active profile')
-PROFILE=$(echo "$RAW_INFO" | awk '{print $NF}')
+# Пути к системным файлам ASUS
+PLATFORM_PROFILE="/sys/user_names/platform_profile" # Для новых ядер
+# Или более старый вариант:
+ASUS_PROFILE="/sys/devices/platform/asus-nb-wmi/throttle_thermal_policy"
 
-# Обновляем виджеты SwayNC БЕЗ перезагрузки всего центра управления
-# Мы просто меняем текст меток через динамический payload
-swaync-client -pd "{\"custom-power\": {\"text\": \"PWR: $PROFILE\"}}" > /dev/null 2>&1
+# Иконки для Waybar
+ICON_PERF="󰓅" # Performance
+ICON_BAL="󰾆"  # Balanced
+ICON_QUIET="󰊠" # Quiet
 
-# Переключаем профиль и даем контроллеру чуть больше времени (ASUS бывает медленным)
-asusctl profile next > /dev/null
-sleep 0.2
+get_profile() {
+    if [ -f "/sys/firmware/acpi/platform_profile" ]; then
+        cat /sys/firmware/acpi/platform_profile
+    elif [ -f "$ASUS_PROFILE" ]; then
+        case $(cat "$ASUS_PROFILE") in
+            0) echo "balanced" ;;
+            1) echo "performance" ;;
+            2) echo "quiet" ;;
+        esac
+    else
+        echo "unknown"
+    fi
+}
 
-# Отправляем уведомление
-notify-send -a "Asus System" -i "battery-charging" "Режим питания" "Активен: $PROFILE"
+set_profile() {
+    CURRENT=$(get_profile)
+    # Циклическое переключение
+    case "$CURRENT" in
+        balanced)    NEXT="performance" ;;
+        performance) NEXT="quiet" ;;
+        quiet)       NEXT="balanced" ;;
+        *)           NEXT="balanced" ;;
+    esac
 
-# Сигнал Waybar обновить отображение (если там есть модуль)
-pkill -SIGUSR2 waybar
+    # Пробуем через platform_profile (нужен sudo или правила udev)
+    if [ -f "/sys/firmware/acpi/platform_profile" ]; then
+        echo "$NEXT" | sudo tee /sys/firmware/acpi/platform_profile
+    fi
+
+    # Отправляем уведомление
+    notify-send "Power Profile" "Switched to $NEXT" -i "power-profile"
+}
+
+# Если запущен с аргументом --toggle
+if [[ "$1" == "--toggle" ]]; then
+    set_profile
+    exit 0
+fi
+
+# Основной вывод для Waybar
+PROFILE=$(get_profile)
+case "$PROFILE" in
+    performance) echo "{\"text\": \"$ICON_PERF\", \"tooltip\": \"Profile: Performance\", \"class\": \"perf\"}" ;;
+    quiet)       echo "{\"text\": \"$ICON_QUIET\", \"tooltip\": \"Profile: Quiet\", \"class\": \"quiet\"}" ;;
+    *)           echo "{\"text\": \"$ICON_BAL\", \"tooltip\": \"Profile: Balanced\", \"class\": \"balanced\"}" ;;
+esac

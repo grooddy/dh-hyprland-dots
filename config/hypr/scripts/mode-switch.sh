@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Путь: ~/.config/hypr/scripts/mode-switch.sh
 
 CURRENT_SCHEME=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")

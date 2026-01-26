@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 EWW_BIN="eww"
 EWW_CONF="$HOME/.config/eww"
@@ -37,7 +37,7 @@ while true; do
         rm -f "$PID_FILE"
         exit 0
     fi
-    
+
     # Если мышь наведена, проверяем снова каждые полсекунды
     sleep 0.5
 done

@@ -1,63 +1,119 @@
 @import "../../.cache/matugen/colors-waybar.css";
 
+/* --- ГЛОБАЛЬНЫЕ НАСТРОЙКИ --- */
 * {
-    margin: 0;
-    padding: 0;
-    border: none;
-    font-family: "SF Pro Display", "Inter", sans-serif;
-    font-size: 13px;
-    font-weight: 500;
+    /* SF Pro — это база премиальности. Если нет, Inter — лучший заменитель */
+    font-family: "SF Pro Display", "SF Pro Rounded", "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    color: @text;
 }
 
 window#waybar {
-    background: alpha(@surface, 0.6); 
-    border-bottom: 1px solid alpha(@outline, 0.1);
-    color: @text;
+    background-color: transparent;
 }
 
-.modules-left, .modules-right {
-    padding: 0 15px;
+/* --- СТИЛИ ОСТРОВОВ (DYNAMNIC ISLANDS) --- */
+.modules-left,
+.modules-center,
+.modules-right {
+    /* Эффект матового стекла: очень низкая альфа, чтобы Hyprland сделал остальное */
+    background: alpha(@surface, 0.25);
+
+    /* Rim Lighting: создаем эффект блика на верхней грани стекла */
+    border: 1px solid alpha(@outline, 0.08);
+    border-top: 1px solid alpha(@surface_bright, 0.45);
+
+    /* Tahoe стиль: мягкий прямоугольник (Squircle) вместо банальной капсулы */
+    border-radius: 20px;
+
+    padding: 2px 12px;
+    margin: 20px 0 100px 0;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 }
 
-#custom-apple, #clock, #tray, #language, #custom-ai_status, 
-#custom-notification, #pulseaudio, #battery, #backlight, #window {
-    padding: 0 12px;
-    margin: 4px 2px;
-    border-radius: 12px;
-    transition: background 0.4s ease, color 0.4s ease;
-    color: alpha(@text, 0.8);
+/* Эффект при наведении — стекло "наполняется" светом */
+.modules-left:hover,
+.modules-center:hover,
+.modules-right:hover {
+    background: alpha(@surface, 0.45);
+    border: 1px solid alpha(@outline, 0.2);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
 }
 
-#custom-apple:hover, #clock:hover, #pulseaudio:hover, 
-#battery:hover, #language:hover, #custom-ai_status:hover,
-#custom-notification:hover {
-    background: alpha(@primary_container, 0.4);
-    color: @primary;
-}
+/* --- МОДУЛИ: ДЕТАЛИЗАЦИЯ --- */
 
+/* 1. APPLE LOGO (Системное меню) */
 #custom-apple {
-    font-size: 17px;
+    font-size: 18px;
     color: @text;
+    padding: 0 12px 0 4px;
+    opacity: 0.9;
 }
 
+/* 2. WORKSPACES (Минималистичные индикаторы) */
+#workspaces button {
+    color: alpha(@text, 0.3);
+    padding: 0 8px;
+    margin: 4px 2px;
+}
+
+#workspaces button.active {
+    color: @text;
+    background: alpha(@text, 0.1);
+    border-radius: 12px;
+    min-width: 25px; /* Активный элемент чуть "расширяется" */
+}
+
+#workspaces button:hover {
+    color: @text;
+    background: alpha(@text, 0.05);
+    border-radius: 12px;
+}
+
+/* 3. CLOCK (Центральный акцент) */
 #clock {
-    font-weight: 700;
-    font-size: 13.5px;
-    color: @on_surface;
+    font-family: "SF Pro Rounded";
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: -0.4px;
+    color: @text;
+    padding: 0 10px;
 }
 
-#window {
-    color: alpha(@text, 0.4);
-    font-size: 11px;
+/* 4. ГРУППЫ И МОДУЛИ СПРАВА */
+#group-hardware,
+#group-controls,
+#group-system {
+    border-radius: 14px;
 }
 
-#custom-ai_status.running { color: @primary; }
-#custom-ai_status.stopped { color: @error; }
+#pulseaudio,
+#backlight,
+#battery,
+#language,
+#tray,
+#custom-notification {
+    padding: 0 8px;
+    margin: 0 2px;
+}
 
-#battery.charging { color: @primary; }
-#battery.warning { color: @tertiary; }
-#battery.critical { color: @error; }
+/* Аккуратный индикатор батареи */
+#battery.charging {
+    color: #2ecc71;
+}
+#battery.warning {
+    color: #f1c40f;
+}
+#battery.critical {
+    color: #e74c3c;
+}
 
-#tray {
-    margin-left: 10px;
+/* Трей: делаем иконки более элегантными */
+#tray > .passive {
+    opacity: 0.6;
+}
+#tray > .needs-attention {
+    color: @error;
 }

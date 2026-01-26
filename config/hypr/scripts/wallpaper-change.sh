@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Путь: ~/.config/hypr/scripts/wallpaper-change.sh
 
 WALL_DIR="$HOME/Pictures/Wallpapers"

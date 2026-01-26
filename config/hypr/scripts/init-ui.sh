@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Путь: ~/.config/hypr/scripts/init-ui.sh
 
 LOG_FILE="/tmp/init-ui.log"
@@ -38,7 +38,7 @@ run_app() {
         else
             "${@}" &
         fi
-        
+
         # Проверяем, выжил ли процесс через секунду
         sleep 1
         if pgrep -x "$cmd" > /dev/null; then
@@ -76,7 +76,7 @@ sed -i '/transform:/d' "$HOME/.cache/matugen/colors.css" 2>/dev/null
 
 # 5. ЗАПУСК UI (Главный момент)
 # Сначала даем системе "продышаться"
-sleep 0.5 
+sleep 0.5
 run_app waybar
 run_app swaync
 

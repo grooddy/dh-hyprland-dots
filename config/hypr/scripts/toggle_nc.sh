@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 LOCK="/tmp/swaync_toggle.lock"
 # Время ожидания между кликами (в секундах)

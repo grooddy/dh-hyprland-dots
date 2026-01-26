@@ -3,25 +3,20 @@
   "positionX": "right",
   "positionY": "top",
   "layer": "overlay",
-  "transition-duration": 400,
+  "transition-duration": 500,
   "cssPriority": "application",
-  "control-center-width": 360,
+  "control-center-width": 380,
+  "notification-window-width": 380,
   "control-center-height": 820,
   "control-center-margin-top": 0,
   "control-center-margin-right": 0,
 
-  "widgets": [
-    "buttons-grid",
-    "mpris",
-    "volume",
-    "title",
-    "notifications"
-  ],
+  "widgets": ["buttons-grid", "mpris", "volume", "title", "notifications"],
   "widget-config": {
     "title": {
-      "text": "Центр управления",
+      "text": "Control Center",
       "clear-all-button": true,
-      "button-text": "󰎟 Очистить"
+      "button-text": "󰎟 Clear All"
     },
     "volume": {
       "label": "󰕾",
@@ -31,21 +26,36 @@
       "actions": [
         { "label": "󰖩", "command": "rofi-network-manager" },
         { "label": "󰂯", "command": "rofi-bluetooth -theme macos" },
-        { "label": "󰖔", "command": "sh -c /home/dh/.config/hypr/scripts/mode-switch.sh" },
+        {
+          "label": "󰖔",
+          "command": "sh -c /home/dh/.config/hypr/scripts/mode-switch.sh"
+        },
         { "label": "󰕮", "command": "hyprpicker -a" },
-        { "label": "󰢮", "command": "sh -c /home/dh/.config/hypr/scripts/gpu-switch.sh" },
-        { "label": "󰈐", "command": "sh -c /home/dh/.config/hypr/scripts/asus-power.sh" },
-        { "label": "󰸉", "command": "sh -c /home/dh/.config/hypr/scripts/wallpaper-change.sh" },
-        { "label": "Hz", "command": "sh -c /home/dh/.config/hypr/scripts/refresh-switch.sh" },
+        {
+          "label": "󰢮",
+          "command": "sh -c /home/dh/.config/hypr/scripts/gpu-switch.sh"
+        },
+        {
+          "label": "󰈐",
+          "command": "sh -c /home/dh/.config/hypr/scripts/asus-power.sh"
+        },
+        {
+          "label": "󰸉",
+          "command": "sh -c /home/dh/.config/hypr/scripts/wallpaper-change.sh"
+        },
+        {
+          "label": "Hz",
+          "command": "sh -c /home/dh/.config/hypr/scripts/refresh-switch.sh"
+        },
         { "label": "󰐥", "command": "wlogout" }
       ]
     },
     "mpris": {
-      "image-size": 100,
-      "image-radius": 14
+      "image-size": 80,
+      "image-radius": 18
     },
     "notifications": {
-       "label": "Уведомления"
+      "label": "Уведомления"
     }
   }
 }

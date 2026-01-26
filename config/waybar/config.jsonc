@@ -1,134 +1,130 @@
 {
-    "layer": "top",
-    "position": "top",
-    "height": 30,
-    "margin-top": 0,
-    "margin-right": 0,
-    "margin-left": 0,
-    "spacing": 0,
-    "fixed-center": true,
-    "modules-left": [
-        "custom/apple",
-        "hyprland/window"
-    ],
-    "modules-center": ["clock"], 
-    "modules-right": [
-        "tray", 
-        "group/control-center", 
-        "custom/ai_status",
-        "hyprland/language",
-        "custom/notification"
-    ],
+  "layer": "top",
+  "position": "top",
+  "mode": "dock",
+  "height": 140,
+  "margin-top": -10,
+  "margin-left": 10,
+  "margin-right": 10,
+  "margin-bottom": -105,
+  "spacing": 0,
 
-    // --- Группа Control Center (без изменений) ---
-    "group/control-center": {
-        "orientation": "horizontal",
-        "drawer": {
-            "transition-duration": 600,
-            "children-class": "control-center-child",
-            "transition-left-to-right": false
-        },
-        "modules": [
-            "custom/arrow", 
-            "custom/gpu", 
-            "custom/power", 
-            "pulseaudio", 
-            "backlight", 
-            "battery"
-        ]
-    },
+  "modules-left": ["custom/apple", "hyprland/workspaces", "hyprland/window"],
+  "modules-center": ["clock"],
+  "modules-right": ["group/hardware", "group/controls", "group/system"],
 
-    // --- Заголовки окон (Унификация) ---
-    "hyprland/window": {
-        "format": "{}",
-        "max-length": 50,
-        "separate-outputs": true,
-        "rewrite": {
-            "": "Desktop",
-            "(.*) — Mozilla Firefox": "Firefox",
-            "(.*) — Zen Browser": "Zen",
-            "(.*) — Alacritty": "Terminal",
-            "(.*) — Visual Studio Code": "Code",
-            "(.*) — Dolphin": "Files",
-            "nvim (.*)": "Editor",
-            "(.*) — Spotify": "Music"
-        }
+  "custom/apple": {
+    "format": "  ",
+    "on-click": "rofi -show drun -theme macos",
+    "tooltip": false,
+  },
+
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "on-click": "activate",
+    "format-icons": {
+      "active": "",
+      "default": "",
     },
-    // --- Переключатели языков ---
-    "hyprland/language": {
-        "format": "{}",
-        "format-en": "US",
-        "format-uk": "UA",
-        "format-ru": "RU",
-        "color": "@text-alt"
+    "persistent-workspaces": {
+      "*": 5,
     },
-    // --- Остальные модули (без изменений) ---
-    "custom/arrow": { "format": "󰅂", "tooltip": false },
-    "custom/apple": {
-        "format": "󰀵",
-        "on-click": "rofi -show drun -theme macos",
-        "tooltip": false
+  },
+
+  "hyprland/window": {
+    "format": "  Processing: {}",
+    "max-length": 40,
+    "separate-outputs": true,
+    "rewrite": {
+      "": "Desktop",
+      "(.*) — Mozilla Firefox": "Firefox",
+      "(.*) — Zen Browser": "Zen",
+      "(.*) — Visual Studio Code": "VS Code",
+      "(.*) — Alacritty": "Terminal",
     },
-    "custom/gpu": {
-        "exec": "cat /tmp/gpu_status.txt 2>/dev/null || supergfxctl -g",
-        "interval": "once",
-        "signal": 2,
-        "format": "󰢮  {}",
-        "tooltip": false
+  },
+
+  "clock": {
+    "format": "{:%H:%M}",
+    "format-alt": "{:%A, %d %B}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "year",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "days": "<span color='#ecc6d9'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>",
+      },
     },
-    "custom/power": {
-        "exec": "cat /tmp/power_status.txt 2>/dev/null || asusctl profile get | grep 'Active profile' | awk '{print $NF}'",
-        "interval": "once",
-        "signal": 2,
-        "format": "󰓅  {}",
-        "tooltip": false
-    },
-    "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-muted": "󰝟 ",
-        "format-icons": { "default": ["󰕿", "󰖀", "󰕾"] },
-        "on-click": "pamixer -t",
-        "on-click-right": "pavucontrol",
-        "tooltip": false
-    },
-    "battery": {
-        "states": { "warning": 30, "critical": 15 },
-        "format": "{icon} {capacity}%",
-        "format-charging": "󱐋 {capacity}%",
-        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂁", "󰂂", "󰁹"]
-    },
-    "clock": {
-        "format": "{:%a %d %b  %H:%M}",
-        "tooltip-format": "<tt><small>{calendar}</small></tt>",
-        "on-click": "swaync-client -t -sw"
-    },
-    "custom/notification": {
-        "tooltip": false,
-        "format": "{icon}",
-        "format-icons": {
-            "notification": "<span foreground='#ff3b30'><sup></sup></span>",
-            "none": "",
-            "dnd-notification": "<span foreground='#ff3b30'><sup></sup></span>",
-            "dnd-none": ""
-        },
-        "return-type": "json",
-        "exec-if": "which swaync-client",
-        "exec": "swaync-client -swb",
-        "on-click": "swaync-client -t -sw",
-        "escape": true
-    },
-    "tray": { "icon-size": 18, "spacing": 10,"show-passive-items": true },
-    "backlight": {
-        "format": "󰖨   {percent}%", // Солнце в стиле Lucide
-        "tooltip": false
-    },
-    "custom/ai_status": {
+  },
+
+  "group/hardware": {
+    "orientation": "horizontal",
+    "modules": ["custom/gpu", "custom/power"],
+  },
+
+  "group/controls": {
+    "orientation": "horizontal",
+    "modules": ["hyprland/language", "pulseaudio", "backlight"],
+  },
+
+  "group/system": {
+    "orientation": "horizontal",
+    "modules": ["tray", "battery", "custom/notification"],
+  },
+
+  "hyprland/language": {
     "format": "{}",
-    "return-type": "json",
-    "exec": "~/.config/hypr/scripts/ai-status.sh",
-    "interval": 5,
-    "on-click": "~/.config/hypr/scripts/ai-status.sh --toggle-ollama",
-    "on-click-right": "~/.config/hypr/scripts/ai-status.sh --toggle-docker",
-    "tooltip": true
-}
+    "format-en": "EN",
+    "format-uk": "UA",
+    "format-ru": "RU",
+  },
+
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-muted": "󰝟",
+    "format-icons": { "default": ["󰕿", "󰖀", "󰕾"] },
+    "on-click": "pamixer -t",
+  },
+
+  "backlight": {
+    "format": "{icon}",
+    "format-icons": ["󰃞", "󰃟", "󰃠"],
+  },
+
+  "battery": {
+    "states": { "warning": 30, "critical": 15 },
+    "format": "{capacity}% {icon}",
+    "format-charging": "{capacity}% 󱐋",
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂁", "󰂂", "󰁹"],
+  },
+
+  "custom/notification": {
+    "format": "  ",
+    "on-click": "swaync-client -t -sw",
+  },
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 8,
+  },
+  "custom/power": {
+    "exec": "cat /tmp/power_status.txt 2>/dev/null || asusctl profile get | grep 'Active profile' | awk '{print $NF}'",
+    "interval": "once",
+    "signal": 2,
+    "format": "󰓅  {}",
+    "tooltip": false,
+  },
+  "custom/gpu": {
+    "exec": "cat /tmp/gpu_status.txt 2>/dev/null || supergfxctl -g",
+    "interval": "once",
+    "signal": 2,
+    "format": "󰢮  {}",
+    "tooltip": false,
+  },
 }

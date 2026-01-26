@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 LOCKFILE="/tmp/gpu_switch.lock"
 [ -f "$LOCKFILE" ] && exit 0

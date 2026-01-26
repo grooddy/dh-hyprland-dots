@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Путь: ~/.config/hypr/scripts/colors-update.sh
 
 # Получаем обои (из аргумента или кеша)

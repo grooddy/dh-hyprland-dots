@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 MONITOR="eDP-1"
 LOW_HZ=60
