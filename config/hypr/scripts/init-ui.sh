@@ -28,26 +28,22 @@ CACHE_PATH="$HOME/.cache/swww_current"
 WALL_DIR="$HOME/Pictures/Wallpapers"
 UWSM_BIN=$(command -v uwsm)
 
-# 3. Функция запуска (теперь с логированием ошибок запуска)
 run_app() {
     local cmd=$1
-    if ! pgrep -x "$cmd" > /dev/null; then
-        log "Attempting to start $cmd..."
-        if [ -n "$UWSM_BIN" ]; then
-            uwsm app -- "$@" &
-        else
-            "${@}" &
-        fi
+    local proc_name=$1
 
-        # Проверяем, выжил ли процесс через секунду
+    # Сопоставляем команду с реальным именем процесса
+    [[ "$cmd" == "swaync" ]] && proc_name="swaync"
+
+    # Используем -f, чтобы избежать ошибки "длиннее 15 символов"
+    if ! pgrep -f "$proc_name" > /dev/null; then
+        log "Attempting to start $cmd..."
+        # Если юнит маскирован, uwsm может не сработать.
+        # Попробуем запустить как обычное приложение через uwsm app
+        uwsm app -- "$cmd" &
         sleep 1
-        if pgrep -x "$cmd" > /dev/null; then
-            log "SUCCESS: $cmd is running."
-        else
-            log "ERROR: $cmd failed to start. Check journalctl -xe"
-        fi
     else
-        log "SKIP: $cmd is already running."
+        log "SKIP: $proc_name is already running."
     fi
 }
 
