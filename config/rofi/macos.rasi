@@ -1,3 +1,8 @@
+/**
+ * ROFI Premium Glass Theme (macOS Tahoe Style)
+ * Senior IT Specialist Edition
+ **/
+
 @import "~/.cache/matugen/colors-rofi.rasi"
 
 configuration {
@@ -12,7 +17,6 @@ configuration {
 }
 
 * {
-    /* Используем переменные из твоего нового шаблона */
     background-color: transparent;
     text-color: @fg;
     margin: 0;
@@ -21,91 +25,79 @@ configuration {
 }
 
 window {
-    width: 680px;
-    border-radius: 20px; /* Согласовано со SwayNC */
-    
-    /* Используем bg (surface + 75% alpha) из шаблона */
-    background-color: @bg; 
-    
-    /* Используем border-color из шаблона */
+    width: 640px;
+    border-radius: 24px;
+    background-color: @bg;
     border: 1px;
-    border-color: @border-color; 
-    
+    border-color: @border-color;
     location: center;
     anchor: center;
-    y-offset: -10%; 
+    y-offset: -10%;
 }
 
 mainbox {
+    padding: 12px;
     children: [ inputbar, listview ];
 }
 
 inputbar {
-    padding: 30px 30px 20px 30px;
-    spacing: 15px;
+    padding: 20px 25px;
+    spacing: 20px;
     children: [ prompt, entry ];
 }
 
 prompt {
-    /* Акцентный цвет из шаблона */
-    text-color: @accent; 
-    font: "SF Pro Display 24";
+    text-color: @accent;
+    font: "SF Pro Display 22";
     vertical-align: 0.5;
 }
 
 entry {
     placeholder: "Search applications...";
-    /* Используем fg-alt для плейсхолдера */
-    placeholder-color: @fg-alt; 
-    font: "SF Pro Display 22";
-    font-weight: 800;
+    placeholder-color: @fg-alt;
+    font: "SF Pro Display 18";
+    font-weight: 500;
     vertical-align: 0.5;
-    text-color: @fg;
 }
 
 listview {
-    lines: 7;
+    lines: 8;
     columns: 1;
     fixed-height: false;
-    padding: 5px 15px 15px 15px;
-    spacing: 6px;
+    padding: 10px 5px;
+    spacing: 4px;
     scrollbar: false;
-    
-    /* Разделительная линия как в SwayNC */
     border: 1px 0 0 0;
     border-color: @border-color;
 }
 
 element {
     padding: 10px 15px;
-    border-radius: 14px; /* Согласовано с виджетами SwayNC */
+    border-radius: 16px;
     spacing: 15px;
-    background-color: transparent;
-    /* Важно для плавности как в Waybar */
     cursor: pointer;
 }
 
 element-icon {
-    size: 42px;
+    size: 40px;
 }
 
 element-text {
     vertical-align: 0.5;
-    font: "SF Pro Display 15";
-    font-weight: 600;
+    font: "SF Pro Display 14";
+    font-weight: 500;
     text-color: inherit;
 }
 
-/* Активный элемент (выделение как в Waybar hover) */
+/* Эффект выделения Spotlight */
 element selected.normal {
-    /* Используем мягкий контейнерный цвет из нового шаблона */
     background-color: @accent-container;
     text-color: @on-accent-container;
+    /* Тонкая кайма для глубины */
+    border: 1px;
+    border-color: @accent;
 }
 
-/* Принудительно красим текст внутри выделенного элемента */
 element-text selected.normal {
     text-color: @on-accent-container;
 }
-
-/* Добавляем поддержку состояния "активен" (например, за

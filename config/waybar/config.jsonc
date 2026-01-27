@@ -48,6 +48,7 @@
     "format": "{:%H:%M}",
     "format-alt": "{:%A, %d %B}",
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "interval": 60,
     "calendar": {
       "mode": "year",
       "mode-mon-col": 3,
@@ -98,10 +99,17 @@
   },
 
   "battery": {
-    "states": { "warning": 30, "critical": 15 },
+    "states": {
+      "warning": 30,
+      "critical": 15,
+    },
     "format": "{capacity}% {icon}",
     "format-charging": "{capacity}% 󱐋",
+    "format-plugged": "{capacity}% ",
+    "format-alt": "{time} {icon}",
     "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂁", "󰂂", "󰁹"],
+    "tooltip-format": "{timeTo}\nConsumption: {power}W\nHealth: {health}%",
+    "interval": 2,
   },
 
   "custom/notification": {

@@ -4,10 +4,13 @@
 * {
     /* SF Pro — это база премиальности. Если нет, Inter — лучший заменитель */
     font-family: "SF Pro Display", "SF Pro Rounded", "Inter", sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     color: @text;
+    -gtk-icon-transform: scale(1.15);
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+    letter-spacing: -0.2px;
 }
 
 window#waybar {
@@ -75,9 +78,9 @@ window#waybar {
 /* 3. CLOCK (Центральный акцент) */
 #clock {
     font-family: "SF Pro Rounded";
-    font-weight: 800;
-    font-size: 14px;
-    letter-spacing: -0.4px;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.5px;
     color: @text;
     padding: 0 10px;
 }
@@ -95,10 +98,9 @@ window#waybar {
 #language,
 #tray,
 #custom-notification {
-    padding: 0 8px;
+    padding: 0 10px;
     margin: 0 2px;
 }
-
 /* Аккуратный индикатор батареи */
 #battery.charging {
     color: #2ecc71;
@@ -141,4 +143,23 @@ window#waybar {
 /* Синий или нейтральный для баланса */
 #custom-power.balanced {
     color: #89b4fa;
+}
+/* --- СТИЛИЗАЦИЯ ВСПОМОГАТЕЛЬНЫХ ОКОН (TOOLTIPS) --- */
+tooltip {
+    /* Фон делаем чуть плотнее, чем панель, чтобы текст читался */
+    background: alpha(@surface, 0.25);
+    border-radius: 12px;
+    border: 1px solid alpha(@outline, 0.08);
+    border-top: 1px solid alpha(@surface_bright, 0.45);
+    padding: 0 5px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+tooltip label {
+    /* Текст внутри тултипа */
+    color: @text;
+    font-family:
+        "SF Pro Display", "SF Pro Rounded", "JetBrainsMono Nerd Font",
+        "Cascadia Code", monospace;
+    font-size: 14px;
 }
