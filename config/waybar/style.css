@@ -4,13 +4,13 @@
 * {
     /* SF Pro — это база премиальности. Если нет, Inter — лучший заменитель */
     font-family: "SF Pro Display", "SF Pro Rounded", "Inter", sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     color: @text;
     -gtk-icon-transform: scale(1.15);
     text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
-    letter-spacing: -0.2px;
+    letter-spacing: -0.3px;
 }
 
 window#waybar {
@@ -162,4 +162,54 @@ tooltip label {
         "SF Pro Display", "SF Pro Rounded", "JetBrainsMono Nerd Font",
         "Cascadia Code", monospace;
     font-size: 14px;
+}
+
+/* --- МОДУЛИ: ИНДИВИДУАЛЬНОЕ ПОВЕДЕНИЕ (ЭФФЕКТ СТЕКЛА) --- */
+
+/* Селектор для всех модулей внутри Waybar */
+#custom-apple,
+#workspaces,
+#clock,
+#pulseaudio,
+#backlight,
+#battery,
+#language,
+#tray,
+#custom-notification,
+#custom-power,
+#custom-gpu {
+    padding: 0 10px;
+    margin: 2px 4px; /* Горизонтальный отступ между модулями */
+    border-radius: 12px;
+    background: transparent; /* В покое фона нет */
+}
+
+/* Эффект при наведении на ЛЮБОЙ конкретный элемент */
+#custom-apple:hover,
+#clock:hover,
+#pulseaudio:hover,
+#backlight:hover,
+#battery:hover,
+#language:hover,
+#tray:hover,
+#custom-notification:hover,
+#custom-power:hover,
+#custom-gpu:hover {
+    background: alpha(@surface_bright, 0.15); /* Мягкое "наполнение" светом */
+    box-shadow: inset 0 0 0 1px alpha(@surface_bright, 0.2); /* Тонкий внутренний блик */
+    -gtk-icon-transform: scale(1.2); /* Иконка чуть увеличивается */
+}
+
+/* --- КОРРЕКЦИЯ ГРУПП (ОСТРОВОВ) --- */
+.modules-right {
+    padding-right: 8px; /* Дополнительный отступ справа */
+}
+
+/* Чтобы иконки в трее не слипались */
+#tray {
+    margin-right: 10px;
+}
+#tray menu {
+    background: alpha(@surface, 0.95);
+    border-radius: 12px;
 }
