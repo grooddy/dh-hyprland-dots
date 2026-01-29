@@ -2,14 +2,14 @@
   "layer": "top",
   "position": "top",
   "mode": "dock",
-  "height": 140,
+  "height": 50,
   "margin-top": -10,
   "margin-left": 10,
   "margin-right": 10,
-  "margin-bottom": -105,
+  "margin-bottom": -70,
   "spacing": 0,
 
-  "modules-left": ["custom/apple", "hyprland/workspaces", "hyprland/window"],
+  "modules-left": ["custom/apple", "niri/workspaces", "niri/window"],
   "modules-center": ["clock"],
   "modules-right": ["group/hardware", "group/controls", "group/system"],
 
@@ -19,7 +19,7 @@
     "tooltip": false,
   },
 
-  "hyprland/workspaces": {
+  "niri/workspaces": {
     "format": "{icon}",
     "on-click": "activate",
     "format-icons": {
@@ -31,7 +31,7 @@
     },
   },
 
-  "hyprland/window": {
+  "niri/window": {
     "format": "  Processing: {}",
     "max-length": 40,
     "separate-outputs": true,
@@ -71,7 +71,7 @@
 
   "group/controls": {
     "orientation": "horizontal",
-    "modules": ["hyprland/language", "pulseaudio", "backlight"],
+    "modules": ["niri/language", "pulseaudio", "backlight"],
   },
 
   "group/system": {
@@ -79,11 +79,12 @@
     "modules": ["tray", "battery", "custom/notification"],
   },
 
-  "hyprland/language": {
+  "niri/language": {
     "format": "{}",
     "format-en": "EN",
     "format-uk": "UA",
     "format-ru": "RU",
+    "on-click": "hyprctl switchxkblayout current next",
   },
 
   "pulseaudio": {
@@ -91,11 +92,18 @@
     "format-muted": "󰝟",
     "format-icons": { "default": ["󰕿", "󰖀", "󰕾"] },
     "on-click": "pamixer -t",
+    "on-click-right": "pavucontrol",
   },
 
   "backlight": {
-    "format": "{icon}",
+    "device": "amdgpu_bl1",
+    "format": "{icon}   {percent}%", // Добавили процент сюда, чтобы форсировать опрос
     "format-icons": ["󰃞", "󰃟", "󰃠"],
+    "tooltip": true,
+    "format-tooltip": "Яркость: {percent}%",
+    "on-scroll-up": "brightnessctl set 1%+",
+    "on-scroll-down": "brightnessctl set 1%-",
+    "smooth-scrolling-threshold": 1,
   },
 
   "battery": {
@@ -109,7 +117,7 @@
     "format-alt": "{time} {icon}",
     "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂁", "󰂂", "󰁹"],
     "tooltip-format": "{timeTo}\nConsumption: {power}W\nHealth: {health}%",
-    "interval": 2,
+    "interval": 60,
   },
 
   "custom/notification": {

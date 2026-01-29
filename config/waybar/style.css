@@ -16,6 +16,9 @@
 window#waybar {
     background-color: transparent;
 }
+#window {
+    margin: 0 20px 0 0;
+}
 
 /* --- СТИЛИ ОСТРОВОВ (DYNAMNIC ISLANDS) --- */
 .modules-left,
@@ -29,10 +32,9 @@ window#waybar {
     border-top: 1px solid alpha(@surface_bright, 0.45);
 
     /* Tahoe стиль: мягкий прямоугольник (Squircle) вместо банальной капсулы */
-    border-radius: 20px;
-
-    padding: 2px 12px;
-    margin: 20px 0 100px 0;
+    border-radius: 12px;
+    padding: 0;
+    margin: 20px 0 70px 0;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 }
 
@@ -51,7 +53,6 @@ window#waybar {
 #custom-apple {
     font-size: 18px;
     color: @text;
-    padding: 0 12px 0 4px;
     opacity: 0.9;
 }
 
@@ -59,7 +60,7 @@ window#waybar {
 #workspaces button {
     color: alpha(@text, 0.3);
     padding: 0 8px;
-    margin: 4px 2px;
+    margin: 0px 2px;
 }
 
 #workspaces button.active {
@@ -89,7 +90,7 @@ window#waybar {
 #group-hardware,
 #group-controls,
 #group-system {
-    border-radius: 14px;
+    border-radius: 12px;
 }
 
 #pulseaudio,
@@ -100,6 +101,7 @@ window#waybar {
 #custom-notification {
     padding: 0 10px;
     margin: 0 2px;
+    border-radius: 100px;
 }
 /* Аккуратный индикатор батареи */
 #battery.charging {
@@ -126,6 +128,7 @@ window#waybar {
     margin: 4px 0;
     border-radius: 8px;
     transition: all 0.3s ease;
+    border-radius: 20px;
 }
 
 /* Красный акцент для максимальной мощности */
@@ -152,7 +155,6 @@ tooltip {
     border: 1px solid alpha(@outline, 0.08);
     border-top: 1px solid alpha(@surface_bright, 0.45);
     padding: 0 5px;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
 }
 
 tooltip label {
@@ -201,15 +203,25 @@ tooltip label {
 }
 
 /* --- КОРРЕКЦИЯ ГРУПП (ОСТРОВОВ) --- */
-.modules-right {
-    padding-right: 8px; /* Дополнительный отступ справа */
-}
 
 /* Чтобы иконки в трее не слипались */
 #tray {
-    margin-right: 10px;
+    background: alpha(@surface_bright, 0.15);
 }
 #tray menu {
-    background: alpha(@surface, 0.95);
-    border-radius: 12px;
+    /* Фон делаем чуть плотнее, чем панель, чтобы текст читался */
+    background: alpha(@surface, 0.5);
+    border-radius: 0;
+    border: 1px solid alpha(@outline, 0.08);
+    border-top: 1px solid alpha(@surface_bright, 0.45);
+    padding: 5px 5px;
+    /* Текст внутри тултипа */
+    color: @text;
+    font-family:
+        "SF Pro Display", "SF Pro Rounded", "JetBrainsMono Nerd Font",
+        "Cascadia Code", monospace;
+    font-size: 14px;
+}
+#tray menu :hover {
+    background-color: alpha(@surface, 0.5);
 }
