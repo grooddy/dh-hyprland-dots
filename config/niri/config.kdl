@@ -1,0 +1,182 @@
+input {
+    keyboard {
+        xkb {
+            // Добавили ua, теперь у тебя 3 языка
+            layout "us,ua,ru"
+            options "grp:alt_shift_toggle"
+        }
+        repeat-delay 250
+        repeat-rate 50
+    }
+    touchpad {
+        tap
+        natural-scroll
+        accel-profile "flat" // Более точное позиционирование
+        scroll-method "two-finger"
+        dwt // Disable While Typing
+    }
+    mouse {
+        accel-profile "flat"
+    }
+}
+
+output "eDP-1" {
+    // Закомментировано, чтобы работал наш скрипт переключения герцовки
+    mode "1920x1080@60.004"
+    scale 1.0
+}
+
+layout {
+    gaps 12
+    center-focused-column "never"
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+    default-column-width { proportion 0.5; }
+
+    focus-ring {
+    off
+    }
+    border {
+        // Градиентная рамка в стиле Tokyo Night / Cyberpunk
+        width 2
+        active-gradient from="#7aa2f7" to="#bb9af7" angle=45 relative-to="workspace-view"
+        inactive-color "#292e42"
+    }
+    struts {
+        // Убеждаемся, что Waybar не перекрывает окна
+        left 0
+        right 0
+        top 0
+        bottom 0
+    }
+}
+
+// --- VISUALS: СКРУГЛЕНИЯ И ТЕНИ ---
+prefer-no-csd // Заставляем окна использовать наши рамки, а не свои
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+// --- ANIMATIONS: ПЛАВНОСТЬ (Apple-like feel) ---
+// Это делает систему "живой". Используем spring (пружину) для естественности.
+animations {
+    slowdown 1.5 // Можно замедлить для демонстрации (1.0 - норма)
+
+    workspace-switch {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+    }
+
+    window-open {
+        duration-ms 250
+        curve "ease-out-expo"
+    }
+
+    window-close {
+        duration-ms 200
+        curve "ease-out-quad"
+    }
+
+    horizontal-view-movement {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+    }
+
+    window-movement {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+    }
+}
+
+// --- WINDOW RULES: УМНОЕ ПОВЕДЕНИЕ ---
+// Плавающие окна для диалогов — это признак про-конфига.
+window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    match app-id=r#"^org\.gnome\.Calculator$"#
+    match app-id=r#"^pavucontrol$"#
+    match app-id=r#"^nm-connection-editor$"#
+    match app-id=r#"^extension$"# // Chrome/Firefox extensions windows
+
+    open-floating true
+    default-column-width {} // Авто-размер
+}
+
+// Прозрачность для терминала и редактора кода (для эстетики)
+window-rule {
+    match app-id="Alacritty"
+    match app-id="org.wezfurlong.wezterm"
+    opacity 0.95
+}
+
+spawn-at-startup "swww-daemon"
+spawn-at-startup "nm-applet" "--indicator"
+spawn-at-startup "waybar"
+spawn-at-startup "swaync"
+spawn-at-startup "xwayland-satellite"
+spawn-at-startup "wl-paste" "--watch" "cliphist" "store" // История буфера обмена
+
+binds {
+// --- System ---
+    Mod+Shift+Slash { show-hotkey-overlay; } // Показать подсказку по хоткеям!
+    // Терминал и софт
+    Mod+Return { spawn "alacritty"; }
+    Mod+Q { close-window; }
+    Mod+E { spawn "nautilus"; }
+    Mod+B { spawn "zen-beta"; }
+    Mod+Space { spawn "rofi" "-show" "drun" "-theme" "macos"; }
+    Mod+Shift+W { spawn "sh" "-c" "pkill -9 waybar && waybar & notify-send 'Waybar' 'Config reloaded'"; }
+
+    // Навигация
+    Mod+Left  { focus-column-left; }
+    Mod+Right { focus-column-right; }
+    Mod+Up    { focus-window-or-workspace-up; }
+    Mod+Down  { focus-window-or-workspace-down; }
+
+    Mod+Shift+Left  { move-column-left; }
+    Mod+Shift+Right { move-column-right; }
+
+    // Воркспейсы
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+
+
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+
+    // Экран (Оставляем только одну копию!)
+    Mod+F { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+    Mod+C { center-column; }
+    // Переключить текущее окно в плавающий режим (Toggle)
+    Mod+Shift+T { toggle-window-floating; }
+
+    // Вернуть все плавающие окна в тайлинг (полезно, если всё захламилось)
+    Mod+Shift+P { switch-focus-between-floating-and-tiling; }
+    // Сделать окно на пол-экрана (изменение размера)
+    Mod+R { set-column-width "50%"; }
+
+    // --- Screenshots (Grim + Slurp) ---
+    // Скриншот области в буфер обмена
+    Print { spawn "sh" "-c" "grim -g \"$(slurp)\" - | wl-copy"; }
+    // Скриншот всего экрана в папку
+    Shift+Print { screenshot; }
+
+    // Мультимедиа
+    XF86AudioRaiseVolume { spawn "pamixer" "-i" "5"; }
+    XF86AudioLowerVolume { spawn "pamixer" "-d" "5"; }
+    XF86AudioMute { spawn "pamixer" "-t"; }
+    XF86MonBrightnessUp { spawn "brightnessctl" "set" "5%+"; }
+    XF86MonBrightnessDown { spawn "brightnessctl" "set" "5%-"; }
+
+    // Плеер (Play/Pause)
+    XF86AudioPlay allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    XF86AudioNext allow-when-locked=true { spawn "playerctl" "next"; }
+    XF86AudioPrev allow-when-locked=true { spawn "playerctl" "previous"; }
+    Mod+Shift+E { quit; }
+    Mod+Shift+R { spawn "niri" "msg" "action" "load-config-file"; }
+
+}
